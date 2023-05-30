@@ -1,5 +1,5 @@
 import './App.css'
-import MapComponent from './components/Map/MapComponent'
+import TileMapComponent from './components/TileMap/TileMapComponent'
 
 function App() {
 
@@ -8,7 +8,7 @@ function App() {
       <h1>Tile Map Editor</h1>
       <hr />
       <div className='content'>
-        <MapComponent />
+        <TileMapComponent />
       </div>
     </>
   )

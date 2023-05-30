@@ -1,6 +1,6 @@
+import './TileMapComponent.css';
 import React, { MouseEvent } from "react";
 import { TileMap } from "../../models/TileMap.model";
-import './MapComponent.css';
 import { Position } from "../../models/Position.model";
 import { CanvasUtils } from "../../utils/Canvas.utils";
 
@@ -17,7 +17,7 @@ interface State {
     cursorTilePos: Position | null,
 }
 
-class MapComponent extends React.Component<Props, State> {
+class TileMapComponent extends React.Component<Props, State> {
 
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
@@ -120,4 +120,4 @@ class MapComponent extends React.Component<Props, State> {
     }
 }
 
-export default MapComponent;
+export default TileMapComponent;
