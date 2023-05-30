@@ -3,7 +3,7 @@ import React, { MouseEvent } from "react";
 import { TileMap } from "../../models/TileMap.model";
 import { Position } from "../../models/Position.model";
 import { CanvasUtils } from "../../utils/Canvas.utils";
-import TileComponent from '../Tile/TileComponent';
+import TileInfoComponent from '../TileInfo/TileInfoComponent';
 import { Tile } from '../../models/Tile.model';
 
 interface Props {
@@ -164,7 +164,7 @@ class TileMapComponent extends React.Component<Props, State> {
                         style={this.state.cursorTileStyle}></span>
                     <span id="selected-tile"
                         style={this.state.selectedTileStyle}></span>
-                    <TileComponent tile={this.state.selectedTile} />
+                    <TileInfoComponent tile={this.state.selectedTile} />
                 </div>
 
             </>
