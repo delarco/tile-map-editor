@@ -1,0 +1,11 @@
+.tile-info-container {
+    width: 260px;
+}
+
+.tile-info-container h3 {
+    font-size: .8rem;
+}
+
+span.no-selection {
+    font-size: .75rem;
+}
