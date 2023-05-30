@@ -1,4 +1,4 @@
-import './TileComponent.css';
+import './TileInfoComponent.css';
 import React from "react";
 import { Tile } from '../../models/Tile.model';
 
@@ -10,7 +10,7 @@ interface State {
     tile: Tile | null,
 }
 
-class TileComponent extends React.Component<Props, State> {
+class TileInfoComponent extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
@@ -70,4 +70,4 @@ class TileComponent extends React.Component<Props, State> {
     }
 }
 
-export default TileComponent;
+export default TileInfoComponent;
