@@ -1,0 +1,30 @@
+.toolbox-container {
+    width: 260px;
+}
+
+.toolbox-container h3 {
+    font-size: .8rem;
+}
+
+ul.tools {
+    font-size: .75rem;
+    list-style: none;
+    padding: 0;
+}
+
+ul.tools li {
+    margin: 6px;
+    padding: 6px 4px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+ul.tools li:hover {
+    color: #EFEFEF;
+    background-color: #AAA;
+}
+
+ul.tools li.selected {
+    color: #EFEFEF;
+    background-color: #777;
+}

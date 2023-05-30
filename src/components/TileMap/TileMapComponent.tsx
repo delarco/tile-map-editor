@@ -5,6 +5,7 @@ import { Position } from "../../models/Position.model";
 import { CanvasUtils } from "../../utils/Canvas.utils";
 import TileInfoComponent from '../TileInfo/TileInfoComponent';
 import { Tile } from '../../models/Tile.model';
+import ToolBoxComponent from '../ToolBox/ToolBoxComponent';
 
 interface Props {
     name?: string,
@@ -153,6 +154,7 @@ class TileMapComponent extends React.Component<Props, State> {
                 <h2>{this.state.map.name} - {this.state.map.width}x{this.state.map.height}</h2>
                 <hr />
                 <div className='container'>
+                    <ToolBoxComponent />
                     <canvas id="map-canvas"
                         onMouseMove={ev => this.onCanvasMouseMove(ev)}
                         // onMouseLeave={() => this.onCanvasMouseLeave()}
