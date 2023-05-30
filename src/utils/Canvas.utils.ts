@@ -6,21 +6,20 @@ export class CanvasUtils {
         const horizontalLines = Math.floor(context.canvas.width / tileSize);
 
         context.strokeStyle = color;
+        context.lineWidth = 1;
 
-        for(let x = 0; x < verticalLines; x++) {
+        for(let x = 1; x < verticalLines; x++) {
             
             context.beginPath();
-            context.lineWidth = 1;
             context.moveTo(x * tileSize, 0);
             context.lineTo(x * tileSize, context.canvas.height);
             context.stroke();
             context.closePath();
         }
 
-        for(let y = 0; y < horizontalLines; y++) {
+        for(let y = 1; y < horizontalLines; y++) {
 
             context.beginPath();
-            context.lineWidth = 1;
             context.moveTo(0, y * tileSize);
             context.lineTo(context.canvas.width, y * tileSize);
             context.stroke();
