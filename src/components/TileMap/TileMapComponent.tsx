@@ -17,6 +17,7 @@ interface State {
     canvasStyle: { width: string, height: string },
     cursorTileStyle: { top: number, left: number, display: string },
     cursorTilePos: Position | null,
+    selectedTileStyle: { top: number, left: number, display: string },
     selectedTile: Tile | null,
 }
 
@@ -25,6 +26,7 @@ class TileMapComponent extends React.Component<Props, State> {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     cursorTile: HTMLSpanElement;
+    selectedTile: HTMLSpanElement;
 
     /**
      * Tile size (in pixels) on canvas
@@ -45,6 +47,7 @@ class TileMapComponent extends React.Component<Props, State> {
             },
             cursorTileStyle: { top: 0, left: 0, display: "none" },
             cursorTilePos: null,
+            selectedTileStyle: { top: 0, left: 0, display: "none" },
             selectedTile: null,
         };
     }
@@ -64,18 +67,33 @@ class TileMapComponent extends React.Component<Props, State> {
         this.cursorTile.style.width = `${this.tileSize}px`;
         this.cursorTile.style.height = `${this.tileSize}px`;
 
+        this.selectedTile = document.querySelector("#selected-tile")!;
+        this.selectedTile.style.width = `${this.tileSize}px`;
+        this.selectedTile.style.height = `${this.tileSize}px`;
+
         CanvasUtils.drawGrid(this.ctx, this.tileSize, "#00F");
         CanvasUtils.drawCircle(this.ctx, 260, 260, 10, "#F00", "#00F");
     }
 
     onCanvasMouseLeave(): void {
 
-        // TODO: hide cursorTile
+        this.setState({ cursorTilePos: null });
+    }
+
+    onCursorTileMouseLeave(): void {
+
+        this.setState({
+            cursorTileStyle: {
+                top: 0,
+                left: 0,
+                display: 'none'
+            },
+        })
     }
 
     onCanvasMouseMove(event: MouseEvent<HTMLCanvasElement>): void {
 
-        const rect = (event.target as HTMLCanvasElement).getBoundingClientRect();
+        const rect = this.canvas.getBoundingClientRect();
 
         const cursorPos = new Position(
             event.clientX - rect.left,
@@ -116,8 +134,15 @@ class TileMapComponent extends React.Component<Props, State> {
 
         if (index < this.state.map.tiles.length) {
 
+            const rect = this.canvas.getBoundingClientRect();
+
             this.setState({
                 selectedTile: this.state.map.tiles[index],
+                selectedTileStyle: {
+                    top: rect.top + cursorTile.y * this.tileSize,
+                    left: rect.left + cursorTile.x * this.tileSize,
+                    display: '',
+                }
             });
         }
     }
@@ -130,12 +155,15 @@ class TileMapComponent extends React.Component<Props, State> {
                 <div className='container'>
                     <canvas id="map-canvas"
                         onMouseMove={ev => this.onCanvasMouseMove(ev)}
-                        onMouseLeave={() => this.onCanvasMouseLeave()}
+                        // onMouseLeave={() => this.onCanvasMouseLeave()}
                         style={this.state.canvasStyle}>
                     </canvas>
                     <span id="cursor-tile"
-                        onClick={() => this.onTileSelect(this.state.cursorTilePos)}
+                        onMouseUp={() => this.onTileSelect(this.state.cursorTilePos)}
+                        onMouseLeave={() => this.onCursorTileMouseLeave()}
                         style={this.state.cursorTileStyle}></span>
+                    <span id="selected-tile"
+                        style={this.state.selectedTileStyle}></span>
                     <TileComponent tile={this.state.selectedTile} />
                 </div>
 
