@@ -3,6 +3,8 @@ import React, { MouseEvent } from "react";
 import { TileMap } from "../../models/TileMap.model";
 import { Position } from "../../models/Position.model";
 import { CanvasUtils } from "../../utils/Canvas.utils";
+import TileComponent from '../Tile/TileComponent';
+import { Tile } from '../../models/Tile.model';
 
 interface Props {
     name?: string,
@@ -15,6 +17,7 @@ interface State {
     canvasStyle: { width: string, height: string },
     cursorTileStyle: { top: number, left: number, display: string },
     cursorTilePos: Position | null,
+    selectedTile: Tile | null,
 }
 
 class TileMapComponent extends React.Component<Props, State> {
@@ -42,6 +45,7 @@ class TileMapComponent extends React.Component<Props, State> {
             },
             cursorTileStyle: { top: 0, left: 0, display: "none" },
             cursorTilePos: null,
+            selectedTile: null,
         };
     }
 
@@ -93,7 +97,7 @@ class TileMapComponent extends React.Component<Props, State> {
             && cursorTile.x >= 0
             && cursorTile.y >= 0
         ) {
-            this.setState({ 
+            this.setState({
                 cursorTilePos: cursorTile,
                 cursorTileStyle: {
                     top: rect.top + cursorTile.y * this.tileSize,
@@ -104,17 +108,37 @@ class TileMapComponent extends React.Component<Props, State> {
         }
     }
 
+    onTileSelect(cursorTile: Position | null): void {
+
+        if (!cursorTile) return;
+
+        const index = cursorTile.y * this.state.map.width + cursorTile.x;
+
+        if (index < this.state.map.tiles.length) {
+
+            this.setState({
+                selectedTile: this.state.map.tiles[index],
+            });
+        }
+    }
+
     render() {
         return (
             <>
                 <h2>{this.state.map.name} - {this.state.map.width}x{this.state.map.height}</h2>
                 <hr />
-                <canvas id="map-canvas"
-                    onMouseMove={ev => this.onCanvasMouseMove(ev)}
-                    onMouseLeave={() => this.onCanvasMouseLeave()}
-                    style={this.state.canvasStyle}>
-                </canvas>
-                <span id="cursor-tile" style={this.state.cursorTileStyle}></span>
+                <div className='container'>
+                    <canvas id="map-canvas"
+                        onMouseMove={ev => this.onCanvasMouseMove(ev)}
+                        onMouseLeave={() => this.onCanvasMouseLeave()}
+                        style={this.state.canvasStyle}>
+                    </canvas>
+                    <span id="cursor-tile"
+                        onClick={() => this.onTileSelect(this.state.cursorTilePos)}
+                        style={this.state.cursorTileStyle}></span>
+                    <TileComponent tile={this.state.selectedTile} />
+                </div>
+
             </>
         );
     }
