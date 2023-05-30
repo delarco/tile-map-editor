@@ -28,4 +28,15 @@ export class CanvasUtils {
             
         }
     }
+
+    public static drawCircle(context: CanvasRenderingContext2D, x: number, y: number, radius: number, borderColor: string, fillColor: string): void {
+
+        context.strokeStyle = borderColor;
+        context.fillStyle = fillColor;
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI);
+        context.stroke();
+        context.fill();
+        context.closePath();
+    }
 }

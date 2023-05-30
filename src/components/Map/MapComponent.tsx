@@ -61,6 +61,7 @@ class MapComponent extends React.Component<Props, State> {
         this.cursorTile.style.height = `${this.tileSize}px`;
 
         CanvasUtils.drawGrid(this.ctx, this.tileSize, "#00F");
+        CanvasUtils.drawCircle(this.ctx, 260, 260, 10, "#F00", "#00F");
     }
 
     onCanvasMouseLeave(): void {

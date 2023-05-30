@@ -8,4 +8,5 @@
     border: 1px solid orange;
     position: absolute;
     background-color: rgb(255, 193, 143);
+    opacity: .5;
 }
