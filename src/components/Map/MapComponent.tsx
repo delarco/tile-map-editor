@@ -1,5 +1,5 @@
 import React from "react";
-import { TileMap } from "../../models/TileMap";
+import { TileMap } from "../../models/TileMap.model";
 import './MapComponent.css';
 
 interface Props { }
