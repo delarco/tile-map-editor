@@ -12,6 +12,14 @@ export class TileMap {
         this.name = name;
         this.width = width;
         this.height = height;
-        this.tiles = new Array<Tile>(width * height);
+        this.tiles = new Array<Tile>();
+
+        for(let y = 0; y < this.height; y++) {
+            
+            for(let x = 0; x < this.width; x++) {
+
+                this.tiles.push(new Tile(x, y));
+            }
+        }
     }
 }
