@@ -15,4 +15,8 @@ export interface Tool {
     tileMouseMove(tile: Tile, button: number): void;
 
     canvasMouseLeave(): void;
+
+    onTileSelect(tile: Tile): void;
+
+    onTileUpdate(tile: Tile): void;
 }

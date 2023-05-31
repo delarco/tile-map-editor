@@ -7,6 +7,9 @@ export class SetCollisionTool implements Tool {
 
     private lastTile: Tile;
 
+    public onTileSelect: (tile: Tile) => void;
+    public onTileUpdate: (tile: Tile) => void;
+
     setup(): void {
 
     }
@@ -29,6 +32,7 @@ export class SetCollisionTool implements Tool {
 
         this.lastTile = tile;
         tile.collision = !tile.collision;
+        this.onTileUpdate(tile);
     }
 
     canvasMouseLeave(): void {

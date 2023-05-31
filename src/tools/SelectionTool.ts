@@ -11,6 +11,9 @@ export class SelectionTool implements Tool {
     private canvas: HTMLCanvasElement;
     private tileSize: number;
 
+    public onTileSelect: (tile: Tile) => void;
+    public onTileUpdate: (tile: Tile) => void;
+
     public setup(canvas: HTMLCanvasElement, tileSize: number): void {
 
         const exists = document.querySelector<HTMLSpanElement>(`#${this.elementId}`);
@@ -49,6 +52,7 @@ export class SelectionTool implements Tool {
         this.element.style.top = `${rect.top + tile.y * this.tileSize}px`;
         this.element.style.left = `${rect.left + tile.x * this.tileSize}px`;
         this.element.style.visibility = 'visible';
+        this.onTileSelect(tile);
     }
 
     public tileMouseMove(): void {

@@ -13,6 +13,9 @@ export class HoverTool implements Tool {
 
     private lastTile: Tile;
 
+    public onTileSelect: (tile: Tile) => void;
+    public onTileUpdate: (tile: Tile) => void;
+
     public setup(canvas: HTMLCanvasElement, tileSize: number): void {
 
         const exists = document.querySelector<HTMLSpanElement>(`#${this.elementId}`);
@@ -50,7 +53,7 @@ export class HoverTool implements Tool {
     public tileMouseMove(tile: Tile): void {
 
         if (tile == this.lastTile) return;
-        this.lastTile = tile;        
+        this.lastTile = tile;
 
         const rect = this.canvas.getBoundingClientRect();
         this.element.style.top = `${rect.top + tile.y * this.tileSize}px`;
