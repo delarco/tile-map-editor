@@ -160,6 +160,17 @@ class TileMapComponent extends React.Component<Props, State> {
 
         this.selectedTool = tool;
         this.selectedTool.setup(this.canvas, this.tileSize);
+        this.selectedTool.onTileSelect = tile => this.onTileSelect(tile);
+        this.selectedTool.onTileUpdate = tile => this.onTileUpdate(tile);
+    }
+
+    onTileSelect(tile: Tile): void {
+
+        this.setState({ selectedTile: tile, })
+    }
+
+    onTileUpdate(tile: Tile): void {
+
     }
 
     render() {

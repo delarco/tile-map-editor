@@ -1,3 +1,5 @@
+import { Tile } from "../models/Tile.model";
+
 export class CanvasUtils {
 
     public static drawGrid(context: CanvasRenderingContext2D, tileSize: number, color: string): void {
@@ -37,5 +39,32 @@ export class CanvasUtils {
         context.stroke();
         context.fill();
         context.closePath();
+    }
+
+    public static drawTile(context: CanvasRenderingContext2D, tile: Tile, tileSize: number): void {
+
+        const tileX = (tile.x * tileSize);
+        const tileY = (tile.y * tileSize);
+
+        // clear tile
+        context.fillStyle = "#FFF";
+        context.fillRect(tileX + 1, tileY + 1, tileSize - 2, tileSize - 2);
+
+        // draw X for collision
+        if(tile.collision) {
+
+            context.strokeStyle = "#F00";
+            context.lineWidth = 1;
+            
+            context.beginPath();
+            context.moveTo(tileX + 1, tileY + 1);
+            context.lineTo(tileX + 10, tileY + 10);
+            context.stroke();
+            context.moveTo(tileX + 1, tileY + 10);
+            context.lineTo(tileX + 10, tileY + 1);
+            context.stroke();
+            context.closePath();
+
+        }
     }
 }
