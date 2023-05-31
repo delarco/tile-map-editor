@@ -171,6 +171,7 @@ class TileMapComponent extends React.Component<Props, State> {
 
     onTileUpdate(tile: Tile): void {
 
+        CanvasUtils.drawTile(this.ctx, tile, this.tileSize);
     }
 
     render() {

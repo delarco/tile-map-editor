@@ -10,23 +10,26 @@ export class SetCollisionTool implements Tool {
     public onTileSelect: (tile: Tile) => void;
     public onTileUpdate: (tile: Tile) => void;
 
-    setup(): void {
+    public setup(): void {
 
     }
 
-    tileMouseDown(): void {
+    public tileMouseDown(tile: Tile): void {
+
+        this.lastTile = tile;
+        tile.collision = !tile.collision;
+        this.onTileUpdate(tile);
+    }
+
+    public tileMouseUp(): void {
 
     }
 
-    tileMouseUp(): void {
+    public tileClick(): void {
 
     }
 
-    tileClick(): void {
-
-    }
-
-    tileMouseMove(tile: Tile, button: number): void {
+    public tileMouseMove(tile: Tile, button: number): void {
 
         if (button != 1 || tile == this.lastTile) return;
 
@@ -35,7 +38,7 @@ export class SetCollisionTool implements Tool {
         this.onTileUpdate(tile);
     }
 
-    canvasMouseLeave(): void {
+    public canvasMouseLeave(): void {
 
     }
 }
