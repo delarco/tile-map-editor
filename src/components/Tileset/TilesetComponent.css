@@ -1,0 +1,21 @@
+.tileset-container {
+    width: 260px;
+}
+
+.tileset-container h3 {
+    font-size: .8rem;
+}
+
+.texture-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.texture-list .texture {
+
+    width: 32px;
+    height: 32px;
+    border: 1px solid gray;
+    margin: 4px 4px 0 0;
+    cursor: pointer;
+}

@@ -8,6 +8,7 @@ import { Tile } from '../../models/Tile.model';
 import ToolBoxComponent from '../ToolBox/ToolBoxComponent';
 import { Tool } from '../../tools/Tool';
 import { HoverTool } from '../../tools/HoverTool';
+import TilesetComponent from '../Tileset/TilesetComponent';
 
 interface Props {
     name?: string,
@@ -180,7 +181,11 @@ class TileMapComponent extends React.Component<Props, State> {
                 <h2>{this.state.map.name} - {this.state.map.width}x{this.state.map.height}</h2>
                 <hr />
                 <div className='container'>
-                    <ToolBoxComponent onToolSelected={tool => this.onToolSelected(tool)} />
+                    <div>
+                        <ToolBoxComponent onToolSelected={tool => this.onToolSelected(tool)} />
+                        <hr />
+                        <TilesetComponent />
+                    </div>
                     <canvas id="map-canvas" style={this.state.canvasStyle}></canvas>
                     <TileInfoComponent tile={this.state.selectedTile} />
                 </div>
