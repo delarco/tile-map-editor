@@ -1,6 +1,7 @@
 import { SelectionTool } from "../../tools/SelectionTool";
 import { SetCeilingTool } from "../../tools/SetCeilingTool";
 import { SetCollisionTool } from "../../tools/SetCollisionTool";
+import { SetFloorTool } from "../../tools/SetFloorTool";
 import { SetWallTool } from "../../tools/SetWallTool";
 import { Tool } from "../../tools/Tool";
 import "./ToolBoxComponent.css"
@@ -20,7 +21,7 @@ const tools: Array<Tool> = [
     new SetCollisionTool(),
     new SetWallTool(),
     new SetCeilingTool(),
-    /*{ label: 'SET FLOOR', },*/
+    new SetFloorTool(),
 ];
 
 class ToolBoxComponent extends React.Component<Props, State> {
