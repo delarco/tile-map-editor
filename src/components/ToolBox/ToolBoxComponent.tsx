@@ -1,5 +1,6 @@
 import { SelectionTool } from "../../tools/SelectionTool";
 import { SetCollisionTool } from "../../tools/SetCollisionTool";
+import { SetWallTool } from "../../tools/SetWallTool";
 import { Tool } from "../../tools/Tool";
 import "./ToolBoxComponent.css"
 import React from "react";
@@ -16,8 +17,8 @@ interface State {
 const tools: Array<Tool> = [
     new SelectionTool(),
     new SetCollisionTool(),
-    /*{ label: 'SET WALL', },
-    { label: 'SET CEILING', },
+    new SetWallTool(),
+    /*{ label: 'SET CEILING', },
     { label: 'SET FLOOR', },*/
 ];
 
