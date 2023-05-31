@@ -13,3 +13,10 @@
 body {
   margin: 0;
 }
+
+#selected-tile {
+  border: 1px solid blue;
+  position: absolute;
+  background-color: blue;
+  opacity: .2;
+}

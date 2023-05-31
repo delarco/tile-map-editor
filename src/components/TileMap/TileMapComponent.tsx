@@ -1,11 +1,12 @@
 import './TileMapComponent.css';
-import React, { MouseEvent } from "react";
+import React from "react";
 import { TileMap } from "../../models/TileMap.model";
 import { Position } from "../../models/Position.model";
 import { CanvasUtils } from "../../utils/Canvas.utils";
 import TileInfoComponent from '../TileInfo/TileInfoComponent';
 import { Tile } from '../../models/Tile.model';
 import ToolBoxComponent from '../ToolBox/ToolBoxComponent';
+import { Tool } from '../../tools/Tool';
 
 interface Props {
     name?: string,
@@ -28,6 +29,8 @@ class TileMapComponent extends React.Component<Props, State> {
     ctx: CanvasRenderingContext2D;
     cursorTile: HTMLSpanElement;
     selectedTile: HTMLSpanElement;
+
+    private selectedTool: Tool;
 
     /**
      * Tile size (in pixels) on canvas
@@ -64,88 +67,72 @@ class TileMapComponent extends React.Component<Props, State> {
         this.ctx.lineWidth = 1;
         this.ctx.imageSmoothingEnabled = false;
 
-        this.cursorTile = document.querySelector("#cursor-tile")!;
-        this.cursorTile.style.width = `${this.tileSize}px`;
-        this.cursorTile.style.height = `${this.tileSize}px`;
+        document.onclick = (ev) => this.onDocumentMouseEvent(ev);
+        document.onmousedown = (ev) => this.onDocumentMouseEvent(ev);
+        document.onmouseup = (ev) => this.onDocumentMouseEvent(ev);
+        document.onmousemove = (ev) => this.onDocumentMouseEvent(ev);
 
-        this.selectedTile = document.querySelector("#selected-tile")!;
-        this.selectedTile.style.width = `${this.tileSize}px`;
-        this.selectedTile.style.height = `${this.tileSize}px`;
+        //this.cursorTile = document.querySelector("#cursor-tile")!;
+        //this.cursorTile.style.width = `${this.tileSize}px`;
+        //this.cursorTile.style.height = `${this.tileSize}px`;
 
         CanvasUtils.drawGrid(this.ctx, this.tileSize, "#00F");
         CanvasUtils.drawCircle(this.ctx, 260, 260, 10, "#F00", "#00F");
+
+        if (this.selectedTool) this.selectedTool.setup(this.canvas, this.tileSize);
     }
 
-    onCanvasMouseLeave(): void {
-
-        this.setState({ cursorTilePos: null });
-    }
-
-    onCursorTileMouseLeave(): void {
-
-        this.setState({
-            cursorTileStyle: {
-                top: 0,
-                left: 0,
-                display: 'none'
-            },
-        })
-    }
-
-    onCanvasMouseMove(event: MouseEvent<HTMLCanvasElement>): void {
+    checkCanvasArea(x: number, y: number): boolean {
 
         const rect = this.canvas.getBoundingClientRect();
 
-        const cursorPos = new Position(
-            event.clientX - rect.left,
-            event.clientY - rect.top
-        );
+        return x >= rect.left
+            && x <= rect.right
+            && y >= rect.top
+            && y <= rect.bottom;
+    }
 
-        const cursorTile = new Position(
-            Math.floor(cursorPos.x / this.tileSize),
-            Math.floor(cursorPos.y / this.tileSize)
-        );
+    getTileFromCanvasPosition(x: number, y: number): Tile | null {
 
-        if (
-            (
-                cursorTile.x != this.state.cursorTilePos?.x
-                || cursorTile.y != this.state.cursorTilePos?.y
-            )
-            && cursorTile.x < this.state.map.width
-            && cursorTile.y < this.state.map.height
-            && cursorTile.x >= 0
+        const rect = this.canvas.getBoundingClientRect();
+        const cursorPos = new Position(x - rect.left, y - rect.top);
+        const cursorTile = new Position(Math.floor(cursorPos.x / this.tileSize), Math.floor(cursorPos.y / this.tileSize));
+
+        if (cursorTile.x >= 0
             && cursorTile.y >= 0
-        ) {
-            this.setState({
-                cursorTilePos: cursorTile,
-                cursorTileStyle: {
-                    top: rect.top + cursorTile.y * this.tileSize,
-                    left: rect.left + cursorTile.x * this.tileSize,
-                    display: '',
+            && cursorTile.x < this.state.map.width
+            && cursorTile.y < this.state.map.height) {
+
+            const index = cursorTile.y * this.state.map.width + cursorTile.x;
+            return this.state.map.tiles[index];
+        }
+
+        return null;
+    }
+
+    onDocumentMouseEvent(event: globalThis.MouseEvent): void {
+
+        if (this.checkCanvasArea(event.clientX, event.clientY)) {
+
+            const tile = this.getTileFromCanvasPosition(event.clientX, event.clientY);
+
+            if (tile) {
+
+                switch (event.type) {
+
+                    case "click": this.selectedTool.tileClick(tile, event.button); break;
+                    case "mousedown": this.selectedTool.tileMouseDown(tile, event.button); break;
+                    case "mouseup": this.selectedTool.tileMouseUp(tile, event.button); break;
+                    case "mousemove": this.selectedTool.tileMouseMove(tile, event.button); break;
                 }
-            });
+            }
         }
     }
 
-    onTileSelect(cursorTile: Position | null): void {
+    onToolSelected(tool: Tool): void {
 
-        if (!cursorTile) return;
-
-        const index = cursorTile.y * this.state.map.width + cursorTile.x;
-
-        if (index < this.state.map.tiles.length) {
-
-            const rect = this.canvas.getBoundingClientRect();
-
-            this.setState({
-                selectedTile: this.state.map.tiles[index],
-                selectedTileStyle: {
-                    top: rect.top + cursorTile.y * this.tileSize,
-                    left: rect.left + cursorTile.x * this.tileSize,
-                    display: '',
-                }
-            });
-        }
+        this.selectedTool = tool;
+        this.selectedTool.setup(this.canvas, this.tileSize);
     }
 
     render() {
@@ -154,18 +141,8 @@ class TileMapComponent extends React.Component<Props, State> {
                 <h2>{this.state.map.name} - {this.state.map.width}x{this.state.map.height}</h2>
                 <hr />
                 <div className='container'>
-                    <ToolBoxComponent />
-                    <canvas id="map-canvas"
-                        onMouseMove={ev => this.onCanvasMouseMove(ev)}
-                        // onMouseLeave={() => this.onCanvasMouseLeave()}
-                        style={this.state.canvasStyle}>
-                    </canvas>
-                    <span id="cursor-tile"
-                        onMouseUp={() => this.onTileSelect(this.state.cursorTilePos)}
-                        onMouseLeave={() => this.onCursorTileMouseLeave()}
-                        style={this.state.cursorTileStyle}></span>
-                    <span id="selected-tile"
-                        style={this.state.selectedTileStyle}></span>
+                    <ToolBoxComponent onToolSelected={tool => this.onToolSelected(tool)} />
+                    <canvas id="map-canvas" style={this.state.canvasStyle}></canvas>
                     <TileInfoComponent tile={this.state.selectedTile} />
                 </div>
 

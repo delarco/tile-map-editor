@@ -4,20 +4,6 @@
     height: 100px;
 }
 
-#cursor-tile {
-    border: 1px solid orange;
-    position: absolute;
-    background-color: rgb(255, 193, 143);
-    opacity: .5;
-}
-
-#selected-tile {
-    border: 1px solid blue;
-    position: absolute;
-    background-color: blue;
-    opacity: .2;
-}
-
 .container {
     display: flex;
     flex-direction: row;

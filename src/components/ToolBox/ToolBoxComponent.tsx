@@ -1,20 +1,24 @@
+import { SelectionTool } from "../../tools/SelectionTool";
+import { Tool } from "../../tools/Tool";
 import "./ToolBoxComponent.css"
 import React from "react";
 
 interface Props {
 
+    onToolSelected: (tool: Tool) => void,
 }
 
 interface State {
-    selectedTool: { label: string, },
+    selectedTool: Tool,
 }
 
-const tools = [
-    { label: 'SELECTION', },
+const tools: Array<Tool> = [
+    new SelectionTool(),
+    /*{ label: 'SELECTION', },
     { label: 'SET COLLISION', },
     { label: 'SET WALL', },
     { label: 'SET CEILING', },
-    { label: 'SET FLOOR', },
+    { label: 'SET FLOOR', },*/
 ];
 
 class ToolBoxComponent extends React.Component<Props, State> {
@@ -22,9 +26,15 @@ class ToolBoxComponent extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
-        this.state = {
-            selectedTool: tools[0]
-        };
+        const defaultTool = tools[0];
+        this.state = { selectedTool: defaultTool, };
+        this.props.onToolSelected(defaultTool);
+    }
+
+    selectTool(tool: Tool): void {
+
+        this.setState({ selectedTool: tool })
+        this.props.onToolSelected(tool);
     }
 
     render() {
@@ -37,8 +47,8 @@ class ToolBoxComponent extends React.Component<Props, State> {
                         tools.map((tool, index) =>
                             <li key={index}
                                 className={tool == this.state.selectedTool ? 'selected' : ''}
-                                onClick={() => this.setState({ selectedTool: tool })}>
-                                {tool.label}
+                                onClick={() => this.selectTool(tool)}>
+                                {tool.name}
                             </li>
                         )
                     }
