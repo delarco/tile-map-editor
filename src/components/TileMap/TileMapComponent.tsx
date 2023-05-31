@@ -18,9 +18,6 @@ interface Props {
 interface State {
     map: TileMap,
     canvasStyle: { width: string, height: string },
-    cursorTileStyle: { top: number, left: number, display: string },
-    cursorTilePos: Position | null,
-    selectedTileStyle: { top: number, left: number, display: string },
     selectedTile: Tile | null,
 }
 
@@ -28,8 +25,6 @@ class TileMapComponent extends React.Component<Props, State> {
 
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
-    cursorTile: HTMLSpanElement;
-    selectedTile: HTMLSpanElement;
 
     mouseOnCanvas: boolean = false;
 
@@ -56,9 +51,6 @@ class TileMapComponent extends React.Component<Props, State> {
                 width: `${props.width! * this.tileSize}px`,
                 height: `${props.height! * this.tileSize}px`,
             },
-            cursorTileStyle: { top: 0, left: 0, display: "none" },
-            cursorTilePos: null,
-            selectedTileStyle: { top: 0, left: 0, display: "none" },
             selectedTile: null,
         };
     }
