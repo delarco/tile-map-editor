@@ -143,7 +143,7 @@ class TileMapComponent extends React.Component<Props, State> {
                         break;
 
                     case "mousemove":
-                        this.selectedTool.tileMouseMove(tile, event.button);
+                        this.selectedTool.tileMouseMove(tile, event.buttons);
                         for (let tool of this.tools) tool.tileMouseMove(tile, event.button);
                         break;
                 }
