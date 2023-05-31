@@ -1,15 +1,17 @@
 import { Tile } from "../models/Tile.model";
 import { Tool } from "./Tool";
 
-export class SelectionTool implements Tool {
+export class HoverTool implements Tool {
 
-    public name = "SELECTION";
+    public name = "HOVER";
 
-    private elementId = 'selected-tile';
+    private elementId = 'cursor-tile';
     private element: HTMLSpanElement;
 
     private canvas: HTMLCanvasElement;
     private tileSize: number;
+
+    private lastTile: Tile;
 
     public setup(canvas: HTMLCanvasElement, tileSize: number): void {
 
@@ -17,7 +19,7 @@ export class SelectionTool implements Tool {
 
         if (exists) {
 
-            this.element = exists
+            this.element = exists;
         }
         else {
 
@@ -41,9 +43,14 @@ export class SelectionTool implements Tool {
 
     }
 
-    public tileClick(tile: Tile, button: number): void {
+    public tileClick(): void {
 
-        if (button != 0) return;
+    }
+
+    public tileMouseMove(tile: Tile): void {
+
+        if (tile == this.lastTile) return;
+        this.lastTile = tile;        
 
         const rect = this.canvas.getBoundingClientRect();
         this.element.style.top = `${rect.top + tile.y * this.tileSize}px`;
@@ -51,11 +58,8 @@ export class SelectionTool implements Tool {
         this.element.style.visibility = 'visible';
     }
 
-    public tileMouseMove(): void {
-        
-    }
-
     public canvasMouseLeave(): void {
-        
+
+        this.element.style.visibility = 'hidden';
     }
 }

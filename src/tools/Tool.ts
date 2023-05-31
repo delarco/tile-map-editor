@@ -13,4 +13,6 @@ export interface Tool {
     tileClick(tile: Tile, button: number): void;
 
     tileMouseMove(tile: Tile, button: number): void;
+
+    canvasMouseLeave(): void;
 }

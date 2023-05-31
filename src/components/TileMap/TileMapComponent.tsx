@@ -7,6 +7,7 @@ import TileInfoComponent from '../TileInfo/TileInfoComponent';
 import { Tile } from '../../models/Tile.model';
 import ToolBoxComponent from '../ToolBox/ToolBoxComponent';
 import { Tool } from '../../tools/Tool';
+import { HoverTool } from '../../tools/HoverTool';
 
 interface Props {
     name?: string,
@@ -29,6 +30,12 @@ class TileMapComponent extends React.Component<Props, State> {
     ctx: CanvasRenderingContext2D;
     cursorTile: HTMLSpanElement;
     selectedTile: HTMLSpanElement;
+
+    mouseOnCanvas: boolean = false;
+
+    private tools: Array<Tool> = [
+        new HoverTool(),
+    ];
 
     private selectedTool: Tool;
 
@@ -72,14 +79,12 @@ class TileMapComponent extends React.Component<Props, State> {
         document.onmouseup = (ev) => this.onDocumentMouseEvent(ev);
         document.onmousemove = (ev) => this.onDocumentMouseEvent(ev);
 
-        //this.cursorTile = document.querySelector("#cursor-tile")!;
-        //this.cursorTile.style.width = `${this.tileSize}px`;
-        //this.cursorTile.style.height = `${this.tileSize}px`;
-
         CanvasUtils.drawGrid(this.ctx, this.tileSize, "#00F");
         CanvasUtils.drawCircle(this.ctx, 260, 260, 10, "#F00", "#00F");
 
         if (this.selectedTool) this.selectedTool.setup(this.canvas, this.tileSize);
+
+        for (let tool of this.tools) tool.setup(this.canvas, this.tileSize);
     }
 
     checkCanvasArea(x: number, y: number): boolean {
@@ -114,16 +119,46 @@ class TileMapComponent extends React.Component<Props, State> {
 
         if (this.checkCanvasArea(event.clientX, event.clientY)) {
 
+            this.mouseOnCanvas = true;
+
             const tile = this.getTileFromCanvasPosition(event.clientX, event.clientY);
 
             if (tile) {
 
                 switch (event.type) {
 
-                    case "click": this.selectedTool.tileClick(tile, event.button); break;
-                    case "mousedown": this.selectedTool.tileMouseDown(tile, event.button); break;
-                    case "mouseup": this.selectedTool.tileMouseUp(tile, event.button); break;
-                    case "mousemove": this.selectedTool.tileMouseMove(tile, event.button); break;
+                    case "click":
+                        this.selectedTool.tileClick(tile, event.button);
+                        for (let tool of this.tools) tool.tileClick(tile, event.button);
+                        break;
+
+                    case "mousedown":
+                        this.selectedTool.tileMouseDown(tile, event.button);
+                        for (let tool of this.tools) tool.tileMouseDown(tile, event.button);
+                        break;
+
+                    case "mouseup":
+                        this.selectedTool.tileMouseUp(tile, event.button);
+                        for (let tool of this.tools) tool.tileMouseUp(tile, event.button);
+                        break;
+
+                    case "mousemove":
+                        this.selectedTool.tileMouseMove(tile, event.button);
+                        for (let tool of this.tools) tool.tileMouseMove(tile, event.button);
+                        break;
+                }
+            }
+        }
+        else {
+
+            if (event.type == "mousemove") {
+
+                if (this.mouseOnCanvas) {
+
+                    this.mouseOnCanvas = false;
+
+                    this.selectedTool.canvasMouseLeave();
+                    for (let tool of this.tools) tool.canvasMouseLeave();
                 }
             }
         }
