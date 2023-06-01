@@ -9,4 +9,5 @@
     background-color: white;
     overflow: scroll;
     font-size: .9rem;
+    z-index: 1;
 }
