@@ -25,6 +25,12 @@ interface State {
     selectedLayer: Layer | null,
 }
 
+const defaultProps: Props = {
+    name: 'New map',
+    width: 20,
+    height: 20,
+}
+
 class TileMapComponent extends React.Component<Props, State> {
 
     canvas: HTMLCanvasElement;
@@ -41,13 +47,13 @@ class TileMapComponent extends React.Component<Props, State> {
     /**
      * Tile size (in pixels) on canvas
      */
-    private tileSize = 50;
+    private tileSize = 30;
 
     constructor(props: Props) {
         super(props);
 
         // default props
-        props = { ...{ name: 'New map', width: 10, height: 10 }, ...props };
+        props = { ...defaultProps, ...props };
 
         this.state = {
             map: new TileMap(props.name!, props.width!, props.height!),
@@ -78,7 +84,6 @@ class TileMapComponent extends React.Component<Props, State> {
         document.onmousemove = (ev) => this.onDocumentMouseEvent(ev);
 
         CanvasUtils.drawGrid(this.ctx, this.tileSize, "#00F");
-        CanvasUtils.drawCircle(this.ctx, 260, 260, 10, "#F00", "#00F");
 
         if (this.selectedTool) this.selectedTool.setup(this.canvas, this.tileSize);
 
