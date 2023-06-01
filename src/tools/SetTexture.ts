@@ -25,7 +25,7 @@ export class SetTextureTool implements Tool {
 
     public setLayer(layer: Layer | null): void {
 
-        if (!layer) return;
+        if (layer == null) return;
         this.layer = layer;
     }
 

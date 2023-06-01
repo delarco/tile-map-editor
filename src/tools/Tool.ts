@@ -9,7 +9,7 @@ export interface Tool {
 
     setTexture(texture: string | null): void;
 
-    setLayer(layer: Layer): void;
+    setLayer(layer: Layer | null): void;
 
     tileMouseDown(tile: Tile, button: number): void;
 

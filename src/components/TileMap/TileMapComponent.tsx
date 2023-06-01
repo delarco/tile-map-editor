@@ -167,6 +167,7 @@ class TileMapComponent extends React.Component<Props, State> {
         this.selectedTool = tool;
         this.selectedTool.setup(this.canvas, this.tileSize);
         this.selectedTool.setTexture(this.state.selectedTexture);
+        this.selectedTool.setLayer(this.state.selectedLayer);
         this.selectedTool.onTileSelect = tile => this.onTileSelect(tile);
         this.selectedTool.onTileUpdate = tile => this.onTileUpdate(tile);
     }
@@ -190,6 +191,7 @@ class TileMapComponent extends React.Component<Props, State> {
     onLayerSelected(layer: Layer): void {
 
         this.setState({ selectedLayer: layer, });
+        this.selectedTool.setLayer(layer);
 
         if (!this.ctx) return;
 
