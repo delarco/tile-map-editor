@@ -1,3 +1,4 @@
+import { Layer } from "../components/Layers/LayersComponent";
 import { Tile } from "../models/Tile.model";
 
 export class CanvasUtils {
@@ -41,7 +42,7 @@ export class CanvasUtils {
         context.closePath();
     }
 
-    public static drawTile(context: CanvasRenderingContext2D, tile: Tile, tileSize: number): void {
+    public static drawTile(context: CanvasRenderingContext2D, tile: Tile, tileSize: number, layer: Layer | null): void {
 
         const tileX = (tile.x * tileSize);
         const tileY = (tile.y * tileSize);
@@ -50,10 +51,27 @@ export class CanvasUtils {
         context.fillStyle = "#FFF";
         context.fillRect(tileX + 1, tileY + 1, tileSize - 2, tileSize - 2);
 
-        // draw wall texture
-        if (tile.wall) {
+        let imageElement: HTMLImageElement | null = null;
 
-            const imageElement = document.querySelector<HTMLImageElement>(`img[src="assets/textures/${tile.wall}"]`)!;
+        // draw wall texture
+        if (layer == Layer.WALL && tile.wall) {
+
+            imageElement = document.querySelector<HTMLImageElement>(`img[src="assets/textures/${tile.wall}"]`)!;
+        }
+
+        // draw floor texture
+        if (layer == Layer.FLOOR && tile.floor) {
+
+            imageElement = document.querySelector<HTMLImageElement>(`img[src="assets/textures/${tile.floor}"]`)!;
+        }
+
+        // draw ceiling texture
+        if (layer == Layer.CEILING && tile.ceiling) {
+
+            imageElement = document.querySelector<HTMLImageElement>(`img[src="assets/textures/${tile.ceiling}"]`)!;
+        }
+
+        if (imageElement) {
 
             context.drawImage(
                 imageElement,

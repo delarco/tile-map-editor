@@ -9,6 +9,7 @@ import ToolBoxComponent from '../ToolBox/ToolBoxComponent';
 import { Tool } from '../../tools/Tool';
 import { HoverTool } from '../../tools/HoverTool';
 import TilesetComponent from '../Tileset/TilesetComponent';
+import LayersComponent, { Layer } from '../Layers/LayersComponent';
 
 interface Props {
     name?: string,
@@ -21,6 +22,7 @@ interface State {
     canvasStyle: { width: string, height: string },
     selectedTile: Tile | null,
     selectedTexture: string | null,
+    selectedLayer: Layer | null,
 }
 
 class TileMapComponent extends React.Component<Props, State> {
@@ -55,6 +57,7 @@ class TileMapComponent extends React.Component<Props, State> {
             },
             selectedTile: null,
             selectedTexture: null,
+            selectedLayer: null,
         };
     }
 
@@ -175,13 +178,25 @@ class TileMapComponent extends React.Component<Props, State> {
 
     onTileUpdate(tile: Tile): void {
 
-        CanvasUtils.drawTile(this.ctx, tile, this.tileSize);
+        CanvasUtils.drawTile(this.ctx, tile, this.tileSize, this.state.selectedLayer);
     }
 
     onTextureSelect(texture: string): void {
 
         this.setState({ selectedTexture: texture, })
         this.selectedTool.setTexture(texture);
+    }
+
+    onLayerSelected(layer: Layer): void {
+
+        this.setState({ selectedLayer: layer, });
+
+        if (!this.ctx) return;
+
+        for (let tile of this.state.map.tiles) {
+
+            CanvasUtils.drawTile(this.ctx, tile, this.tileSize, layer);
+        }
     }
 
     render() {
@@ -196,7 +211,11 @@ class TileMapComponent extends React.Component<Props, State> {
                         <TilesetComponent onTextureSelected={texture => this.onTextureSelect(texture)} />
                     </div>
                     <canvas id="map-canvas" style={this.state.canvasStyle}></canvas>
-                    <TileInfoComponent tile={this.state.selectedTile} />
+                    <div>
+                        <LayersComponent onLayerSelected={layer => this.onLayerSelected(layer)} />
+                        <hr />
+                        <TileInfoComponent tile={this.state.selectedTile} />
+                    </div>
                 </div>
 
             </>
