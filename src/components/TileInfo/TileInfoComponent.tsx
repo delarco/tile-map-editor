@@ -49,19 +49,20 @@ class TileInfoComponent extends React.Component<Props, State> {
                             No tile selected
                         </span>
                         : <div>
-                            <ul>
+                            <ul className='tile-properties'>
                                 <li>
                                     x: {this.state.tile.x} &nbsp; y: {this.state.tile.y}
                                 </li>
                                 <li>
-
                                     <label htmlFor='collision'>Collision</label>
                                     <input type='checkbox'
                                         id='collision'
                                         checked={this.state.tile.collision}
                                         onChange={() => this.onCollisionToggle()} />
-
                                 </li>
+                                <li>Wall: {this.state.tile.wall}</li>
+                                <li>Floor: {this.state.tile.floor}</li>
+                                <li>Ceiling: {this.state.tile.ceiling}</li>
                             </ul>
                         </div>
                 }
