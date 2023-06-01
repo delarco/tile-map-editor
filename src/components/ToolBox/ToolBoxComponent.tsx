@@ -1,6 +1,6 @@
 import { SelectionTool } from "../../tools/SelectionTool";
 import { SetCollisionTool } from "../../tools/SetCollisionTool";
-import { SetTextureTool } from "../../tools/SetTexture";
+import { SetTextureTool } from "../../tools/SetTextureTool";
 import { Tool } from "../../tools/Tool";
 import "./ToolBoxComponent.css"
 import React from "react";
