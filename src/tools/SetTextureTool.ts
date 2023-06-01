@@ -33,13 +33,12 @@ export class SetTextureTool implements Tool {
         this.layer = layer;
     }
 
-    public tileMouseDown(tile: Tile): void {
-
-        this.lastTile = tile;
+    private setTileTexture(tile: Tile): void {
 
         switch (this.layer) {
 
             case Layer.WALL:
+                tile.collision = this.texture != null;
                 tile.wall = this.texture;
                 break;
 
@@ -55,6 +54,12 @@ export class SetTextureTool implements Tool {
         this.onTileUpdate(tile);
     }
 
+    public tileMouseDown(tile: Tile): void {
+
+        this.lastTile = tile;
+        this.setTileTexture(tile);
+    }
+
     public tileMouseUp(): void {
 
     }
@@ -68,8 +73,7 @@ export class SetTextureTool implements Tool {
         if (button != 1 || tile == this.lastTile) return;
 
         this.lastTile = tile;
-        tile.wall = this.texture;
-        this.onTileUpdate(tile);
+        this.setTileTexture(tile);
     }
 
     public canvasMouseLeave(): void {
