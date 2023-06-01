@@ -1,0 +1,12 @@
+.json-content {
+
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 10%;
+    bottom: 10%;
+    border: 1px solid gray;
+    background-color: white;
+    overflow: scroll;
+    font-size: .9rem;
+}

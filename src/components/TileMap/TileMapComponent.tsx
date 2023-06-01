@@ -10,6 +10,7 @@ import { Tool } from '../../tools/Tool';
 import { HoverTool } from '../../tools/HoverTool';
 import TilesetComponent from '../Tileset/TilesetComponent';
 import LayersComponent, { Layer } from '../Layers/LayersComponent';
+import ExportComponent from '../Export/ExportComponent';
 
 interface Props {
     name?: string,
@@ -37,8 +38,6 @@ class TileMapComponent extends React.Component<Props, State> {
     ctx: CanvasRenderingContext2D;
 
     mouseOnCanvas: boolean = false;
-
-    exportComponentRef: any;
 
     private tools: Array<Tool> = [
         new HoverTool(),
@@ -229,6 +228,7 @@ class TileMapComponent extends React.Component<Props, State> {
                         <TileInfoComponent tile={this.state.selectedTile} />
                     </div>
                 </div>
+                <ExportComponent map={this.state.map} />
             </>
         );
     }
