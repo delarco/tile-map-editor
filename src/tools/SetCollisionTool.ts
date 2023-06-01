@@ -18,6 +18,10 @@ export class SetCollisionTool implements Tool {
 
     }
 
+    public setLayer(): void {
+
+    }
+
     public tileMouseDown(tile: Tile): void {
 
         this.lastTile = tile;

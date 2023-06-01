@@ -1,3 +1,4 @@
+import { Layer } from "../components/Layers/LayersComponent";
 import { Tile } from "../models/Tile.model";
 
 export interface Tool {
@@ -7,6 +8,8 @@ export interface Tool {
     setup(canvas: HTMLCanvasElement, tileSize: number): void;
 
     setTexture(texture: string | null): void;
+
+    setLayer(layer: Layer): void;
 
     tileMouseDown(tile: Tile, button: number): void;
 

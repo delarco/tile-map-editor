@@ -42,6 +42,10 @@ export class HoverTool implements Tool {
 
     }
 
+    public setLayer(): void {
+
+    }
+
     public tileMouseDown(): void {
 
     }

@@ -1,8 +1,6 @@
 import { SelectionTool } from "../../tools/SelectionTool";
-import { SetCeilingTool } from "../../tools/SetCeilingTool";
 import { SetCollisionTool } from "../../tools/SetCollisionTool";
-import { SetFloorTool } from "../../tools/SetFloorTool";
-import { SetWallTool } from "../../tools/SetWallTool";
+import { SetTextureTool } from "../../tools/SetTexture";
 import { Tool } from "../../tools/Tool";
 import "./ToolBoxComponent.css"
 import React from "react";
@@ -19,9 +17,7 @@ interface State {
 const tools: Array<Tool> = [
     new SelectionTool(),
     new SetCollisionTool(),
-    new SetWallTool(),
-    new SetCeilingTool(),
-    new SetFloorTool(),
+    new SetTextureTool(),
 ];
 
 class ToolBoxComponent extends React.Component<Props, State> {

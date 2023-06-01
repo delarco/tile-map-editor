@@ -1,12 +1,14 @@
+import { Layer } from "../components/Layers/LayersComponent";
 import { Tile } from "../models/Tile.model";
 import { Tool } from "./Tool";
 
-export class SetWallTool implements Tool {
+export class SetTextureTool implements Tool {
 
-    public name = "SET WALL";
+    public name = "SET TEXTURE";
 
     private lastTile: Tile;
     private texture: string;
+    private layer: Layer;
 
     public onTileSelect: (tile: Tile) => void;
     public onTileUpdate: (tile: Tile) => void;
@@ -21,10 +23,31 @@ export class SetWallTool implements Tool {
         this.texture = texture;
     }
 
+    public setLayer(layer: Layer | null): void {
+
+        if (!layer) return;
+        this.layer = layer;
+    }
+
     public tileMouseDown(tile: Tile): void {
 
         this.lastTile = tile;
-        tile.wall = this.texture;
+
+        switch (this.layer) {
+
+            case Layer.WALL:
+                tile.wall = this.texture;
+                break;
+
+            case Layer.FLOOR:
+                tile.floor = this.texture;
+                break;
+
+            case Layer.CEILING:
+                tile.ceiling = this.texture;
+                break;
+        }
+
         this.onTileUpdate(tile);
     }
 

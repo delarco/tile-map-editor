@@ -40,6 +40,10 @@ export class SelectionTool implements Tool {
 
     }
 
+    public setLayer(): void {
+
+    }
+
     public tileMouseDown(): void {
 
     }
