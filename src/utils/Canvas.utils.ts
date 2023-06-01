@@ -10,8 +10,8 @@ export class CanvasUtils {
         context.strokeStyle = color;
         context.lineWidth = 1;
 
-        for(let x = 1; x < verticalLines; x++) {
-            
+        for (let x = 1; x < verticalLines; x++) {
+
             context.beginPath();
             context.moveTo(x * tileSize, 0);
             context.lineTo(x * tileSize, context.canvas.height);
@@ -19,14 +19,14 @@ export class CanvasUtils {
             context.closePath();
         }
 
-        for(let y = 1; y < horizontalLines; y++) {
+        for (let y = 1; y < horizontalLines; y++) {
 
             context.beginPath();
             context.moveTo(0, y * tileSize);
             context.lineTo(context.canvas.width, y * tileSize);
             context.stroke();
             context.closePath();
-            
+
         }
     }
 
@@ -50,12 +50,24 @@ export class CanvasUtils {
         context.fillStyle = "#FFF";
         context.fillRect(tileX + 1, tileY + 1, tileSize - 2, tileSize - 2);
 
+        // draw wall texture
+        if (tile.wall) {
+
+            const imageElement = document.querySelector<HTMLImageElement>(`img[src="assets/textures/${tile.wall}"]`)!;
+
+            context.drawImage(
+                imageElement,
+                tileX + 1, tileY + 1,
+                tileSize - 2, tileSize - 2
+            );
+        }
+
         // draw X for collision
-        if(tile.collision) {
+        if (tile.collision) {
 
             context.strokeStyle = "#F00";
             context.lineWidth = 1;
-            
+
             context.beginPath();
             context.moveTo(tileX + 1, tileY + 1);
             context.lineTo(tileX + 10, tileY + 10);
