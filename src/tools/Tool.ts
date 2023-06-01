@@ -6,7 +6,7 @@ export interface Tool {
 
     setup(canvas: HTMLCanvasElement, tileSize: number): void;
 
-    setTexture(texture: string): void;
+    setTexture(texture: string | null): void;
 
     tileMouseDown(tile: Tile, button: number): void;
 
