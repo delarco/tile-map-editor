@@ -10,3 +10,7 @@
     /* align-items: flex-start; */
     justify-content: space-around;
 }
+
+.components-right {
+    user-select: none;
+}

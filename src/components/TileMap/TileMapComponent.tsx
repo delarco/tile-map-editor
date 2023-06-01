@@ -213,7 +213,7 @@ class TileMapComponent extends React.Component<Props, State> {
                         <TilesetComponent onTextureSelected={texture => this.onTextureSelect(texture)} />
                     </div>
                     <canvas id="map-canvas" style={this.state.canvasStyle}></canvas>
-                    <div>
+                    <div className='components-right'>
                         <LayersComponent onLayerSelected={layer => this.onLayerSelected(layer)} />
                         <hr />
                         <TileInfoComponent tile={this.state.selectedTile} />
