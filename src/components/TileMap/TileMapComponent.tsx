@@ -38,6 +38,8 @@ class TileMapComponent extends React.Component<Props, State> {
 
     mouseOnCanvas: boolean = false;
 
+    exportComponentRef: any;
+
     private tools: Array<Tool> = [
         new HoverTool(),
     ];
@@ -186,6 +188,7 @@ class TileMapComponent extends React.Component<Props, State> {
 
     onTileUpdate(tile: Tile): void {
 
+        this.setState({ map: this.state.map });
         CanvasUtils.drawTile(this.ctx, tile, this.tileSize, this.state.selectedLayer);
     }
 
@@ -226,7 +229,6 @@ class TileMapComponent extends React.Component<Props, State> {
                         <TileInfoComponent tile={this.state.selectedTile} />
                     </div>
                 </div>
-
             </>
         );
     }
