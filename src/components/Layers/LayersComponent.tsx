@@ -5,6 +5,7 @@ export enum Layer {
     WALL,
     FLOOR,
     CEILING,
+    MINIMAP,
 }
 
 interface Props {
@@ -63,6 +64,14 @@ class LayersComponent extends React.Component<Props, State> {
                             name="layer"
                             checked={this.state.selectedLayer == Layer.CEILING}
                             onChange={() => this.selectLayer(Layer.CEILING)} />
+                    </li>
+                    <li>
+                        <label htmlFor='layer-minimap'>Minimap</label>
+                        <input id="layer-minimap"
+                            type='radio'
+                            name="layer"
+                            checked={this.state.selectedLayer == Layer.MINIMAP}
+                            onChange={() => this.selectLayer(Layer.MINIMAP)} />
                     </li>
                 </ul>
             </div>
