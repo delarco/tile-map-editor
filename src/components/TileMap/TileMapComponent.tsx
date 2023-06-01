@@ -117,6 +117,8 @@ class TileMapComponent extends React.Component<Props, State> {
 
         if (this.checkCanvasArea(event.clientX, event.clientY)) {
 
+            event.preventDefault();
+
             this.mouseOnCanvas = true;
 
             const tile = this.getTileFromCanvasPosition(event.clientX, event.clientY);
