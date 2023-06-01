@@ -20,6 +20,7 @@ interface State {
     map: TileMap,
     canvasStyle: { width: string, height: string },
     selectedTile: Tile | null,
+    selectedTexture: string | null,
 }
 
 class TileMapComponent extends React.Component<Props, State> {
@@ -53,6 +54,7 @@ class TileMapComponent extends React.Component<Props, State> {
                 height: `${props.height! * this.tileSize}px`,
             },
             selectedTile: null,
+            selectedTexture: null,
         };
     }
 
@@ -161,6 +163,7 @@ class TileMapComponent extends React.Component<Props, State> {
 
         this.selectedTool = tool;
         this.selectedTool.setup(this.canvas, this.tileSize);
+        this.selectedTool.setTexture(this.state.selectedTexture);
         this.selectedTool.onTileSelect = tile => this.onTileSelect(tile);
         this.selectedTool.onTileUpdate = tile => this.onTileUpdate(tile);
     }
@@ -175,6 +178,12 @@ class TileMapComponent extends React.Component<Props, State> {
         CanvasUtils.drawTile(this.ctx, tile, this.tileSize);
     }
 
+    onTextureSelect(texture: string): void {
+
+        this.setState({ selectedTexture: texture, })
+        this.selectedTool.setTexture(texture);
+    }
+
     render() {
         return (
             <>
@@ -184,7 +193,7 @@ class TileMapComponent extends React.Component<Props, State> {
                     <div>
                         <ToolBoxComponent onToolSelected={tool => this.onToolSelected(tool)} />
                         <hr />
-                        <TilesetComponent />
+                        <TilesetComponent onTextureSelected={texture => this.onTextureSelect(texture)} />
                     </div>
                     <canvas id="map-canvas" style={this.state.canvasStyle}></canvas>
                     <TileInfoComponent tile={this.state.selectedTile} />

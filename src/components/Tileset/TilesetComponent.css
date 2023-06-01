@@ -11,11 +11,35 @@
     flex-wrap: wrap;
 }
 
-.texture-list .texture {
-
+.texture {
     width: 32px;
     height: 32px;
     border: 1px solid gray;
     margin: 4px 4px 0 0;
     cursor: pointer;
+}
+
+.texture.selected {
+    border: 1px solid red;
+}
+
+.selected-texture-info {
+    /* border: 1px solid blue; */
+    display: inline-block;
+    font-size: .7rem;
+    margin-left: 50px;
+}
+
+.selected-texture-info img {
+    width: 32px;
+    height: 32px;
+}
+
+.selected-texture-info span {
+    margin-left: 6px;
+}
+
+.selected-texture img {
+    width: 32px;
+    height: 32px;
 }
