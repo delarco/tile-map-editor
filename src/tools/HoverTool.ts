@@ -38,6 +38,10 @@ export class HoverTool implements Tool {
         this.element.style.height = `${tileSize}px`;
     }
 
+    public setTexture(): void {
+
+    }
+
     public tileMouseDown(): void {
 
     }

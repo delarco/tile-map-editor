@@ -12,6 +12,10 @@ export class SetFloorTool implements Tool {
 
     }
 
+    public setTexture(): void {
+
+    }
+
     public tileMouseDown(): void {
 
     }

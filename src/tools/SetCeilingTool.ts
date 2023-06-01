@@ -12,6 +12,10 @@ export class SetCeilingTool implements Tool {
 
     }
 
+    public setTexture(): void {
+
+    }
+
     public tileMouseDown(): void {
 
     }

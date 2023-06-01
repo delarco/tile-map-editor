@@ -14,6 +14,10 @@ export class SetCollisionTool implements Tool {
 
     }
 
+    public setTexture(): void {
+
+    }
+
     public tileMouseDown(tile: Tile): void {
 
         this.lastTile = tile;

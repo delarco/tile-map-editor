@@ -12,6 +12,10 @@ export class SetWallTool implements Tool {
 
     }
 
+    public setTexture(): void {
+
+    }
+
     public tileMouseDown(): void {
 
     }
