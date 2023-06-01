@@ -12,6 +12,7 @@ interface State {
 class TilesetComponent extends React.Component<Props, State> {
 
     private textureFiles = [
+        'blank.png',
         'ground-01.png',
         'grass-01.png',
         'grass-01-snow-01.png',
@@ -53,7 +54,7 @@ class TilesetComponent extends React.Component<Props, State> {
                         this.textureFiles.map((file, index) => (
                             <img key={index}
                                 className={this.state.selectedTexture == file ? 'texture selected' : 'texture'}
-                                src={'assets/textures/' + file}
+                                src={file ? 'assets/textures/' + file : ''}
                                 onClick={() => this.selectTexture(file)} />
                         ))
                     }

@@ -7,7 +7,7 @@ export class SetTextureTool implements Tool {
     public name = "SET TEXTURE";
 
     private lastTile: Tile;
-    private texture: string;
+    private texture: string | null;
     private layer: Layer;
 
     public onTileSelect: (tile: Tile) => void;
@@ -19,7 +19,11 @@ export class SetTextureTool implements Tool {
 
     public setTexture(texture: string | null): void {
 
-        if (!texture) return;
+        if (texture && texture.toUpperCase().indexOf("BLANK.PNG") >= 0) {
+
+            texture = null;
+        }
+
         this.texture = texture;
     }
 
