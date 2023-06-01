@@ -88,10 +88,10 @@ export class CanvasUtils {
 
             context.beginPath();
             context.moveTo(tileX + 1, tileY + 1);
-            context.lineTo(tileX + 10, tileY + 10);
+            context.lineTo(tileX + tileSize / 5, tileY + tileSize / 5);
             context.stroke();
-            context.moveTo(tileX + 1, tileY + 10);
-            context.lineTo(tileX + 10, tileY + 1);
+            context.moveTo(tileX + 1, tileY + tileSize / 5);
+            context.lineTo(tileX + tileSize / 5, tileY + 1);
             context.stroke();
             context.closePath();
 
