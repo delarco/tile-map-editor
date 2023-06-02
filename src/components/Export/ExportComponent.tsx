@@ -25,8 +25,6 @@ class ExportComponent extends React.Component<Props, State> {
 
     static getDerivedStateFromProps(props: Props, state: State) {
 
-
-
         if (props.map !== state.map) {
 
             return {
@@ -45,12 +43,13 @@ class ExportComponent extends React.Component<Props, State> {
                 width: map.width,
                 height: map.height,
             },
-            skybox: map.skybox || "",
+            skybox: map.skybox || "skybox-night.png",
             spawnLocations: map.spawnLocations.length > 0 
                 ? map.spawnLocations
-                : [{ "x": 0, "y": 0, "a": 0 }],
+                : [{ "x": 50, "y": 50, "a": 0 }],
             musicList: map.musicList,
             sprites: map.sprites,
+            defaultFloor: map.defaultFloor,
             tiles: map.tiles.map(tile => {
                 return {
                     index: {
@@ -68,10 +67,7 @@ class ExportComponent extends React.Component<Props, State> {
                     ceiling: tile.ceiling,
                 }
             })
-            
-            
-        }
-
+        };
     }
 
     render() {

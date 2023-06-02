@@ -11,6 +11,7 @@ export class TileMap {
     public skybox: string;
     public musicList: Array<string>;
     public sprites: Array<string>;
+    public defaultFloor: string;
 
     constructor(name: string, width: number, height: number) {
 
