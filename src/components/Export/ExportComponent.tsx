@@ -19,7 +19,7 @@ class ExportComponent extends React.Component<Props, State> {
 
         this.state = {
             map: ExportComponent.formatMap(props.map),
-            visible: true,
+            visible: false,
         };
     }
 
