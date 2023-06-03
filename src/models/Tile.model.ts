@@ -1,4 +1,13 @@
 import { Color } from "./Color.model";
+import { Texture } from "./Texture.model";
+
+export interface TileFaceTexture {
+
+    north: Texture | null;
+    south: Texture | null;
+    east: Texture | null;
+    west: Texture | null;
+}
 
 export class Tile {
 
@@ -7,8 +16,8 @@ export class Tile {
         public y: number,
         public minimapColor: Color = Color.WHITE,
         public collision: boolean = false,
-        public wall: string | null = null,
-        public floor: string | null = null,
-        public ceiling: string | null = null,
+        public wall: TileFaceTexture = { north: null, south: null, east: null, west: null },
+        public floor: TileFaceTexture = { north: null, south: null, east: null, west: null },
+        public ceiling: TileFaceTexture = { north: null, south: null, east: null, west: null },
     ) { }
 }
