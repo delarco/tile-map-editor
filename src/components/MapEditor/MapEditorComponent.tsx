@@ -9,6 +9,9 @@ import LayersComponent from "../Layers/LayersComponent";
 import TileInfoComponent from "../TileInfo/TileInfoComponent";
 import CanvasEventHandlerComponent from '../Canvas/CanvasComponent';
 import CanvasComponent from "../Canvas/CanvasComponent";
+import ExportComponent from '../Export/ExportComponent';
+import TexturesComponent from '../Textures/TexturesComponent';
+import { TextureProvider } from '../../context/TextureContext';
 
 
 const MapEditorComponent = () => {
@@ -18,7 +21,7 @@ const MapEditorComponent = () => {
 
     const [map] = useState<TileMap>(new TileMap('New map', 10, 10));
     const [tileSize] = useState<number>(30);
-    
+
     useEffect(() => {
 
     }, []);
@@ -26,24 +29,26 @@ const MapEditorComponent = () => {
     return (
         <TileProvider>
             <LayerProvider>
-                <ToolProvider>
-                    <h2>{map.name} - {map.width}x{map.height}</h2>
-                    <hr />
-                    <div className='container'>
-                        <div>
-                            <ToolBoxComponent />
-                            <hr />
-                            {/* <TilesetComponent onTextureSelected={texture => this.onTextureSelect(texture)} /> */}
+                <TextureProvider>
+                    <ToolProvider>
+                        <h2>{map.name} - {map.width}x{map.height}</h2>
+                        <hr />
+                        <div className='container'>
+                            <div>
+                                <ToolBoxComponent />
+                                <hr />
+                                <TexturesComponent />
+                            </div>
+                            <CanvasComponent ref={canvasRef} map={map} tileSize={tileSize} />
+                            <div className='components-right'>
+                                <LayersComponent />
+                                <hr />
+                                <TileInfoComponent />
+                            </div>
                         </div>
-                        <CanvasComponent ref={canvasRef} map={map} tileSize={tileSize} />
-                        <div className='components-right'>
-                            <LayersComponent />
-                            <hr />
-                            <TileInfoComponent />
-                        </div>
-                    </div>
-                    {/* <ExportComponent map={this.state.map} /> */}
-                </ToolProvider>
+                        <ExportComponent map={map} />
+                    </ToolProvider>
+                </TextureProvider>
             </LayerProvider>
         </TileProvider>
     );
