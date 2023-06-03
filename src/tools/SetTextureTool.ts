@@ -16,33 +16,26 @@ export class SetTextureTool implements Tool {
 
     private setTileTexture(tile: Tile, layer: Layer, texture: Texture): void {
 
-        let layerProperty: TileFaceTexture | null = null;
-
         switch (layer) {
 
-            case Layer.WALL:               
-                layerProperty = tile.wall;
+            case Layer.WALL:
+                tile.collision = texture.collision;
+                tile.wall.north = texture;
+                tile.wall.south = texture;
+                tile.wall.east = texture;
+                tile.wall.west = texture;
                 break;
 
             case Layer.FLOOR:
-                layerProperty = tile.floor;
+                tile.floor = texture;
                 break;
 
             case Layer.CEILING:
-                layerProperty = tile.ceiling;
+                tile.ceiling = texture;
                 break;
         }
 
-        if (layerProperty) {
-
-            tile.collision = texture.collision;
-            layerProperty.north = texture;
-            layerProperty.south = texture;
-            layerProperty.east = texture;
-            layerProperty.west = texture;
-
-            this.onTileUpdate(tile);
-        }
+        this.onTileUpdate(tile);
     }
 
     public tileMouseDown({ tile, layer, texture }: ToolActionParams): void {
