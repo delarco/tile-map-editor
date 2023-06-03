@@ -8,13 +8,14 @@ export class Texture {
     public width: number;
     public height: number;
     public collision: boolean = true;
-    public image: React.DetailedReactHTMLElement<HTMLAttributes<HTMLImageElement>, HTMLImageElement>;
+    public domElement: React.DetailedReactHTMLElement<HTMLAttributes<HTMLImageElement>, HTMLImageElement>;
+    public image: HTMLImageElement;
 
     constructor(filename: string) {
 
         this.filename = filename;
 
-        this.image = React.createElement(
+        this.domElement = React.createElement(
             "img",
             {
                 //id: ``;
@@ -25,9 +26,9 @@ export class Texture {
                 },
                 onLoad: (ev) => {
 
-                    const imageElement = <HTMLImageElement>ev.target;
-                    this.width = imageElement.naturalWidth;
-                    this.height = imageElement.naturalHeight;
+                    this.image = <HTMLImageElement>ev.target;
+                    this.width = this.image.naturalWidth;
+                    this.height = this.image.naturalHeight;
                 }
             },
         );
