@@ -1,60 +1,49 @@
+import { ToolContext, ToolContextType } from "../../context/ToolContext";
 import { SelectionTool } from "../../tools/SelectionTool";
 import { SetCollisionTool } from "../../tools/SetCollisionTool";
-import { SetTextureTool } from "../../tools/SetTextureTool";
 import { Tool } from "../../tools/Tool";
 import "./ToolBoxComponent.css"
-import React from "react";
-
-interface Props {
-
-    onToolSelected: (tool: Tool) => void,
-}
-
-interface State {
-    selectedTool: Tool,
-}
+import React, { useEffect } from "react";
 
 const tools: Array<Tool> = [
     new SelectionTool(),
     new SetCollisionTool(),
-    new SetTextureTool(),
+    //new SetTextureTool(),
 ];
 
-class ToolBoxComponent extends React.Component<Props, State> {
+const ToolBoxComponent = () => {
 
-    constructor(props: Props) {
-        super(props);
+    const { tool: selectedTool, selectTool } = React.useContext(ToolContext) as ToolContextType;
 
-        const defaultTool = tools[0];
-        this.state = { selectedTool: defaultTool, };
-        this.props.onToolSelected(defaultTool);
-    }
+    useEffect(() => {
 
-    selectTool(tool: Tool): void {
+        selectTool(tools[0]);
+    }, []);
 
-        this.setState({ selectedTool: tool })
-        this.props.onToolSelected(tool);
-    }
-
-    render() {
-        return (
-            <div className='toolbox-container'>
-                <h3>Tool Box</h3>
-                <hr />
-                <ul className="tools">
-                    {
-                        tools.map((tool, index) =>
-                            <li key={index}
-                                className={tool == this.state.selectedTool ? 'selected' : ''}
-                                onClick={() => this.selectTool(tool)}>
-                                {tool.name}
-                            </li>
-                        )
-                    }
-                </ul>
-            </div>
-        );
-    }
+    return (
+        <div className='toolbox-container'>
+            <h3>Tool Box</h3>
+            <hr />
+            <ul className="tools">
+                {
+                    tools.map((tool, index) =>
+                        <li key={index}
+                            className={tool == selectedTool ? 'selected' : ''}
+                            onClick={() => selectTool(tool)}>
+                            {tool.name}
+                        </li>
+                    )
+                }
+            </ul>
+            {
+                tools.map((tool, index) => 
+                <React.Fragment key={index}>
+                    {tool.domElement}
+                </React.Fragment>
+                )
+            }
+        </div>
+    );
 }
 
 export default ToolBoxComponent;

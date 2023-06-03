@@ -23,7 +23,6 @@ export const ToolProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <ToolContext.Provider value={{ tool: selectedTool, selectTool }}>
-        selected tool: {selectedTool?.name}
         {children}
     </ToolContext.Provider>
   );

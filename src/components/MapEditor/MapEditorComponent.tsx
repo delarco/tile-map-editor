@@ -1,0 +1,52 @@
+import './MapEditorComponent.css';
+import { ElementRef, useEffect, useRef, useState } from "react";
+import { LayerProvider } from "../../context/LayerContext";
+import { ToolProvider } from "../../context/ToolContext";
+import { TileMap } from "../../models/TileMap.model";
+import { TileProvider } from '../../context/TileContext';
+import ToolBoxComponent from "../ToolBox/ToolBoxComponent";
+import LayersComponent from "../Layers/LayersComponent";
+import TileInfoComponent from "../TileInfo/TileInfoComponent";
+import CanvasEventHandlerComponent from '../Canvas/CanvasComponent';
+import CanvasComponent from "../Canvas/CanvasComponent";
+
+
+const MapEditorComponent = () => {
+
+    type CanvasHandle = ElementRef<typeof CanvasEventHandlerComponent>;
+    const canvasRef = useRef<CanvasHandle>(null);
+
+    const [map] = useState<TileMap>(new TileMap('New map', 10, 10));
+    const [tileSize] = useState<number>(30);
+    
+    useEffect(() => {
+
+    }, []);
+
+    return (
+        <TileProvider>
+            <LayerProvider>
+                <ToolProvider>
+                    <h2>{map.name} - {map.width}x{map.height}</h2>
+                    <hr />
+                    <div className='container'>
+                        <div>
+                            <ToolBoxComponent />
+                            <hr />
+                            {/* <TilesetComponent onTextureSelected={texture => this.onTextureSelect(texture)} /> */}
+                        </div>
+                        <CanvasComponent ref={canvasRef} map={map} tileSize={tileSize} />
+                        <div className='components-right'>
+                            <LayersComponent />
+                            <hr />
+                            <TileInfoComponent />
+                        </div>
+                    </div>
+                    {/* <ExportComponent map={this.state.map} /> */}
+                </ToolProvider>
+            </LayerProvider>
+        </TileProvider>
+    );
+}
+
+export default MapEditorComponent;

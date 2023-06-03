@@ -23,7 +23,6 @@ export const LayerProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <LayerContext.Provider value={{ layer: selectedLayer, selectLayer }}>
-        selected layer: {selectedLayer}
         {children}
     </LayerContext.Provider>
   );

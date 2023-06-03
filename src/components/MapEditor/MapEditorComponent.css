@@ -1,9 +1,3 @@
-#map-canvas {
-    border: 1px solid gray;
-    width: 100px;
-    height: 100px;
-}
-
 .container {
     display: flex;
     flex-direction: row;

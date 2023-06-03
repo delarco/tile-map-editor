@@ -1,23 +1,31 @@
+import React from "react";
 import { Layer } from "../components/Layers/LayersComponent";
 import { Tile } from "../models/Tile.model";
+
+export interface ToolActionParams {
+
+    canvas: HTMLCanvasElement | null;
+    context: CanvasRenderingContext2D | null;
+    tile: Tile | null;
+    button: number | null;
+    layer: Layer | null;
+    texture: string | null;
+    tileSize: number | null;
+}
 
 export interface Tool {
 
     name: string;
 
-    setup(canvas: HTMLCanvasElement, tileSize: number): void;
+    domElement: React.DetailedReactHTMLElement<{}, HTMLElement> | null;
 
-    setTexture(texture: string | null): void;
+    tileMouseDown(params: ToolActionParams): void;
 
-    setLayer(layer: Layer | null): void;
+    tileMouseUp(params: ToolActionParams): void;
 
-    tileMouseDown(tile: Tile, button: number): void;
+    tileClick(params: ToolActionParams): void;
 
-    tileMouseUp(tile: Tile, button: number): void;
-
-    tileClick(tile: Tile, button: number): void;
-
-    tileMouseMove(tile: Tile, button: number): void;
+    tileMouseMove(params: ToolActionParams): void;
 
     canvasMouseLeave(): void;
 

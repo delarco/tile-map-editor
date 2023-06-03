@@ -1,11 +1,13 @@
 import { Tile } from "../models/Tile.model";
-import { Tool } from "./Tool";
+import { Tool, ToolActionParams } from "./Tool";
 
 export class SetCollisionTool implements Tool {
 
     public name = "SET COLLISION";
 
-    private lastTile: Tile;
+    public domElement = null;
+
+    private lastTile: Tile | null;
 
     public onTileSelect: (tile: Tile) => void;
     public onTileUpdate: (tile: Tile) => void;
@@ -22,9 +24,12 @@ export class SetCollisionTool implements Tool {
 
     }
 
-    public tileMouseDown(tile: Tile): void {
+    public tileMouseDown({ tile }: ToolActionParams): void {
 
         this.lastTile = tile;
+
+        if (!tile) return;
+
         tile.collision = !tile.collision;
         this.onTileUpdate(tile);
     }
@@ -37,9 +42,9 @@ export class SetCollisionTool implements Tool {
 
     }
 
-    public tileMouseMove(tile: Tile, button: number): void {
+    public tileMouseMove({ tile, button }: ToolActionParams): void {
 
-        if (button != 1 || tile == this.lastTile) return;
+        if (button != 1 || !tile || tile == this.lastTile) return;
 
         this.lastTile = tile;
         tile.collision = !tile.collision;

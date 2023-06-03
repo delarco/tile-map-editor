@@ -1,49 +1,35 @@
+import React, { HTMLAttributes } from "react";
 import { Tile } from "../models/Tile.model";
-import { Tool } from "./Tool";
+import { Tool, ToolActionParams } from "./Tool";
 
 export class HoverTool implements Tool {
 
     public name = "HOVER";
 
     private elementId = 'cursor-tile';
-    private element: HTMLSpanElement;
 
-    private canvas: HTMLCanvasElement;
-    private tileSize: number;
+    public domElement: React.DetailedReactHTMLElement<HTMLAttributes<HTMLElement>, HTMLElement>;
 
     private lastTile: Tile;
 
     public onTileSelect: (tile: Tile) => void;
     public onTileUpdate: (tile: Tile) => void;
 
-    public setup(canvas: HTMLCanvasElement, tileSize: number): void {
+    constructor() {
 
-        const exists = document.querySelector<HTMLSpanElement>(`#${this.elementId}`);
-
-        if (exists) {
-
-            this.element = exists;
-        }
-        else {
-
-            this.element = document.createElement("span");
-            this.element.id = this.elementId;
-            this.element.style.visibility = 'hidden';
-            document.querySelector('#root')?.appendChild(this.element);
-        }
-
-        this.canvas = canvas;
-        this.tileSize = tileSize;
-        this.element.style.width = `${tileSize}px`;
-        this.element.style.height = `${tileSize}px`;
-    }
-
-    public setTexture(): void {
-
-    }
-
-    public setLayer(): void {
-
+        this.domElement = React.createElement(
+            "span",
+            {
+                id: this.elementId,
+                style: {
+                    left: 0,
+                    top: 0,
+                    width: 1,
+                    height: 1,
+                    visibility: 'visible'
+                }
+            },
+        );
     }
 
     public tileMouseDown(): void {
@@ -58,19 +44,30 @@ export class HoverTool implements Tool {
 
     }
 
-    public tileMouseMove(tile: Tile): void {
+    public tileMouseMove(params: ToolActionParams): void {
 
-        if (tile == this.lastTile) return;
-        this.lastTile = tile;
+        if (!params.canvas || !params.tile || !params.tileSize) return;
 
-        const rect = this.canvas.getBoundingClientRect();
-        this.element.style.top = `${rect.top + tile.y * this.tileSize}px`;
-        this.element.style.left = `${rect.left + tile.x * this.tileSize}px`;
-        this.element.style.visibility = 'visible';
+        if (params.tile == this.lastTile) return;
+        
+        this.lastTile = params.tile;
+
+        const rect = params.canvas.getBoundingClientRect();
+
+        const element = document.querySelector<HTMLSpanElement>(`#${this.elementId}`);
+
+        if (!element) return;
+
+        element.style.top = `${rect.top + params.tile.y * params.tileSize}px`;
+        element.style.left = `${rect.left + params.tile.x * params.tileSize}px`;
+        element.style.width = `${params.tileSize}px`;
+        element.style.height = `${params.tileSize}px`;
+        element.style.visibility = 'visible';
     }
 
     public canvasMouseLeave(): void {
 
-        this.element.style.visibility = 'hidden';
+        const element = document.querySelector<HTMLSpanElement>(`#${this.elementId}`);
+        if (element) element.style.visibility = 'hidden';
     }
 }
