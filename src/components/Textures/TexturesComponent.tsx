@@ -41,7 +41,7 @@ const TexturesComponent = () => {
             <hr />
             <div className="selected-texture">
                 <div className="image">
-                    {selectedTexture?.image}
+                    {selectedTexture?.domElement}
                 </div>
                 <div className="info">
                     Size: {selectedTexture?.width}x{selectedTexture?.height}
@@ -56,7 +56,7 @@ const TexturesComponent = () => {
                         <li key={index}
                             className={texture == selectedTexture ? "texture selected" : "texture"}
                             onClick={() => selectTexture(texture)}>
-                            {texture.image}
+                            {texture.domElement}
                         </li>
                     ))
                 }
