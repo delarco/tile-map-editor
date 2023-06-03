@@ -54,21 +54,21 @@ export class CanvasUtils {
         let imageElement: HTMLImageElement | null = null;
 
         // draw wall texture
-        if (layer == Layer.WALL && tile.wall) {
+        if (layer == Layer.WALL && tile.wall.north) {
 
-            imageElement = document.querySelector<HTMLImageElement>(`img[src="assets/textures/${tile.wall}"]`)!;
+            imageElement = tile.wall.north.image;
         }
 
         // draw floor texture
         if (layer == Layer.FLOOR && tile.floor) {
 
-            imageElement = document.querySelector<HTMLImageElement>(`img[src="assets/textures/${tile.floor}"]`)!;
+            imageElement = tile.floor.image;
         }
 
         // draw ceiling texture
         if (layer == Layer.CEILING && tile.ceiling) {
 
-            imageElement = document.querySelector<HTMLImageElement>(`img[src="assets/textures/${tile.ceiling}"]`)!;
+            imageElement = tile.ceiling.image;
         }
 
         if (imageElement) {
