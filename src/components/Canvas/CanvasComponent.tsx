@@ -16,6 +16,7 @@ import { Layer } from "../Layers/LayersComponent";
 type CanvasUpdateProps = {
     map: TileMap,
     tileSize: number,
+    onTileUpdate: (tile: Tile) => void;
 }
 
 type CanvasUpdateHandler = {
@@ -23,7 +24,7 @@ type CanvasUpdateHandler = {
 }
 
 const CanvasComponent: ForwardRefRenderFunction<CanvasUpdateHandler, CanvasUpdateProps> = (
-    { map, tileSize },
+    { map, tileSize, onTileUpdate },
     forwardedRef,
 ) => {
 
@@ -81,8 +82,8 @@ const CanvasComponent: ForwardRefRenderFunction<CanvasUpdateHandler, CanvasUpdat
         document.onmouseup = onDocumentMouseEvent;
         document.onmousemove = onDocumentMouseEvent;
 
-        if (tool && !tool.onTileSelect) tool.onTileSelect = onTileSelected;
-        if (tool && !tool.onTileUpdate) tool.onTileUpdate = onTileUpdate;
+        if (tool) tool.onTileSelect = onTileSelected;
+        if (tool) tool.onTileUpdate = localOnTileUpdate;
     };
 
     const checkCanvasArea = (x: number, y: number): boolean => {
@@ -183,11 +184,11 @@ const CanvasComponent: ForwardRefRenderFunction<CanvasUpdateHandler, CanvasUpdat
         selectTile(tile);
     };
 
-    const onTileUpdate = (tile: Tile) => {
+    const localOnTileUpdate = (tile: Tile) => {
 
-        if(!context) return;
+        if (!context) return;
 
-        // this.setState({ map: this.state.map });
+        onTileUpdate(tile);
         CanvasUtils.drawTile(context, tile, tileSize, layer);
     };
 
@@ -195,9 +196,9 @@ const CanvasComponent: ForwardRefRenderFunction<CanvasUpdateHandler, CanvasUpdat
 
         redrawLayer(layer: Layer) {
 
-            if(!context) return;
+            if (!context) return;
 
-            map.tiles.forEach(tile => 
+            map.tiles.forEach(tile =>
                 CanvasUtils.drawTile(context, tile, tileSize, layer));
         }
     }));
@@ -210,7 +211,7 @@ const CanvasComponent: ForwardRefRenderFunction<CanvasUpdateHandler, CanvasUpdat
 
     bindEvents();
 
-    if(context) CanvasUtils.drawGrid(context, tileSize, "#00F");
+    if (context) CanvasUtils.drawGrid(context, tileSize, "#00F");
 
     return (
         <>
