@@ -62,9 +62,14 @@ class ExportComponent extends React.Component<Props, State> {
                         tile.minimapColor.b,
                     ],
                     collision: tile.collision,
-                    wall: tile.wall,
-                    floor: tile.floor,
-                    ceiling: tile.ceiling,
+                    wall: {
+                        north: tile.wall.north?.filename,
+                        south: tile.wall.south?.filename,
+                        east: tile.wall.east?.filename,
+                        west: tile.wall.west?.filename,
+                    },
+                    floor: tile.floor?.filename,
+                    ceiling: tile.ceiling?.filename,
                 }
             })
         };
