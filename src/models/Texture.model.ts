@@ -18,7 +18,6 @@ export class Texture {
         this.domElement = React.createElement(
             "img",
             {
-                //id: ``;
                 src: `/assets/textures/${filename}`,
                 style: {
                     width: '100%',
@@ -26,6 +25,7 @@ export class Texture {
                 },
                 onLoad: (ev) => {
 
+                    if (this.image) return;
                     this.image = <HTMLImageElement>ev.target;
                     this.width = this.image.naturalWidth;
                     this.height = this.image.naturalHeight;
