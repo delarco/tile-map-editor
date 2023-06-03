@@ -1,0 +1,44 @@
+.textures-container {
+    width: 260px;
+}
+
+.textures-container h3 {
+    font-size: .8rem;
+}
+
+.texture-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.texture {
+    width: 42px;
+    height: 42px;
+    border: 1px solid gray;
+    margin: 4px 4px 0 0;
+    cursor: pointer;
+}
+
+.texture.selected {
+    border: 1px solid red;
+}
+
+.selected-texture {
+    font-size: .65rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.selected-texture .image {
+    width: 48px;
+    height: 48px;
+    border: 1px solid gray;
+    margin-right: 12px;
+}
+
+.selected-texture .info {
+    line-height: 1.5;
+}
