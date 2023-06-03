@@ -22,6 +22,8 @@ const MapEditorComponent = () => {
     const [map] = useState<TileMap>(new TileMap('New map', 10, 10));
     const [tileSize] = useState<number>(30);
 
+    
+
     useEffect(() => {
 
     }, []);
@@ -41,7 +43,7 @@ const MapEditorComponent = () => {
                             </div>
                             <CanvasComponent ref={canvasRef} map={map} tileSize={tileSize} />
                             <div className='components-right'>
-                                <LayersComponent />
+                                <LayersComponent onLayerChange={layer => canvasRef.current?.redrawLayer(layer)} />
                                 <hr />
                                 <TileInfoComponent />
                             </div>

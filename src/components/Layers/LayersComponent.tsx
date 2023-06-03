@@ -1,6 +1,6 @@
 import { LayerContext, LayerContextType } from "../../context/LayerContext";
 import "./LayersComponent.css"
-import React, { useEffect } from "react";
+import React, { ForwardRefRenderFunction, forwardRef, useEffect } from "react";
 
 export enum Layer {
     WALL,
@@ -9,9 +9,26 @@ export enum Layer {
     MINIMAP,
 }
 
-const LayersComponent = () => {
+type LayersProps = {
+    onLayerChange: (layer: Layer) => void;
+}
+
+type LayersHandler = {
+
+}
+
+const LayersComponent: ForwardRefRenderFunction<LayersHandler, LayersProps> = (
+    { onLayerChange },
+    forwardedRef
+) => {
 
     const { layer: selectedLayer, selectLayer } = React.useContext(LayerContext) as LayerContextType;
+
+    const changeLayer = (layer: Layer) => {
+
+        selectLayer(layer);
+        onLayerChange(layer);
+    };
 
     useEffect(() => {
 
@@ -29,7 +46,7 @@ const LayersComponent = () => {
                             type='radio'
                             name="layer"
                             checked={selectedLayer == Layer.WALL}
-                            onChange={() => selectLayer(Layer.WALL)} />
+                            onChange={() => changeLayer(Layer.WALL)} />
                     </li>
                     <li>
                         <label htmlFor='layer-floor'>Floor</label>
@@ -37,7 +54,7 @@ const LayersComponent = () => {
                             type='radio'
                             name="layer"
                             checked={selectedLayer == Layer.FLOOR}
-                            onChange={() => selectLayer(Layer.FLOOR)} />
+                            onChange={() => changeLayer(Layer.FLOOR)} />
                     </li>
                     <li>
                         <label htmlFor='layer-ceiling'>Ceiling</label>
@@ -45,7 +62,7 @@ const LayersComponent = () => {
                             type='radio'
                             name="layer"
                             checked={selectedLayer == Layer.CEILING}
-                            onChange={() => selectLayer(Layer.CEILING)} />
+                            onChange={() => changeLayer(Layer.CEILING)} />
                     </li>
                     <li>
                         <label htmlFor='layer-minimap'>Minimap</label>
@@ -53,11 +70,11 @@ const LayersComponent = () => {
                             type='radio'
                             name="layer"
                             checked={selectedLayer == Layer.MINIMAP}
-                            onChange={() => selectLayer(Layer.MINIMAP)} />
+                            onChange={() => changeLayer(Layer.MINIMAP)} />
                     </li>
                 </ul>
             </div>
         );
 }
 
-export default LayersComponent;
+export default forwardRef(LayersComponent);

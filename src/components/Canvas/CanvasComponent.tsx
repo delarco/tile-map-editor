@@ -11,6 +11,7 @@ import { CanvasUtils } from "../../utils/Canvas.utils";
 import { TileContext } from "../../context/TileContext";
 import { TileContextType } from "../../context/TileContext";
 import { TextureContext, TextureContextType } from "../../context/TextureContext";
+import { Layer } from "../Layers/LayersComponent";
 
 type CanvasUpdateProps = {
     map: TileMap,
@@ -18,7 +19,7 @@ type CanvasUpdateProps = {
 }
 
 type CanvasUpdateHandler = {
-    //doSomething: () => void,
+    redrawLayer: (layer: Layer) => void,
 }
 
 const CanvasComponent: ForwardRefRenderFunction<CanvasUpdateHandler, CanvasUpdateProps> = (
@@ -191,8 +192,14 @@ const CanvasComponent: ForwardRefRenderFunction<CanvasUpdateHandler, CanvasUpdat
     };
 
     useImperativeHandle(forwardedRef, () => ({
-        // clear() { },
-        // pesquisa(terms: string) { }
+
+        redrawLayer(layer: Layer) {
+
+            if(!context) return;
+
+            map.tiles.forEach(tile => 
+                CanvasUtils.drawTile(context, tile, tileSize, layer));
+        }
     }));
 
     useEffect(() => {
