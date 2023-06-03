@@ -10,6 +10,7 @@ import { HoverTool } from "../../tools/HoverTool";
 import { CanvasUtils } from "../../utils/Canvas.utils";
 import { TileContext } from "../../context/TileContext";
 import { TileContextType } from "../../context/TileContext";
+import { TextureContext, TextureContextType } from "../../context/TextureContext";
 
 type CanvasUpdateProps = {
     map: TileMap,
@@ -28,6 +29,7 @@ const CanvasComponent: ForwardRefRenderFunction<CanvasUpdateHandler, CanvasUpdat
     const { layer } = useContext(LayerContext) as LayerContextType;
     const { tool } = useContext(ToolContext) as ToolContextType;
     const { selectTile } = useContext(TileContext) as TileContextType;
+    const { texture } = useContext(TextureContext) as TextureContextType;
 
     const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
@@ -131,7 +133,7 @@ const CanvasComponent: ForwardRefRenderFunction<CanvasUpdateHandler, CanvasUpdat
                     context: context,
                     button: event.buttons,
                     layer: layer,
-                    texture: null,
+                    texture: texture,
                     tile: tile,
                     tileSize: tileSize
                 };
