@@ -19,10 +19,10 @@ const MapEditorComponent = () => {
     type CanvasHandle = ElementRef<typeof CanvasEventHandlerComponent>;
     const canvasRef = useRef<CanvasHandle>(null);
 
-    const [map] = useState<TileMap>(new TileMap('New map', 10, 10));
+    const [map, setMap] = useState<TileMap>(new TileMap('New map', 10, 10));
     const [tileSize] = useState<number>(30);
 
-    
+    const onTileUpdate = () => setMap(map);
 
     useEffect(() => {
 
@@ -41,7 +41,7 @@ const MapEditorComponent = () => {
                                 <hr />
                                 <TexturesComponent />
                             </div>
-                            <CanvasComponent ref={canvasRef} map={map} tileSize={tileSize} />
+                            <CanvasComponent ref={canvasRef} map={map} tileSize={tileSize} onTileUpdate={onTileUpdate} />
                             <div className='components-right'>
                                 <LayersComponent onLayerChange={layer => canvasRef.current?.redrawLayer(layer)} />
                                 <hr />
