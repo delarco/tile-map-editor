@@ -7,6 +7,7 @@ export class Texture {
     public keywords: Array<string>;
     public width: number;
     public height: number;
+    public collision: boolean = true;
     public image: React.DetailedReactHTMLElement<HTMLAttributes<HTMLImageElement>, HTMLImageElement>;
 
     constructor(filename: string) {

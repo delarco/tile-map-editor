@@ -22,7 +22,14 @@ const TexturesComponent = () => {
 
     useEffect(() => {
 
-        const textures = textureFiles.map(file => new Texture(file));
+        const textures = textureFiles.map(file => {
+            const texture = new Texture(file);
+
+            if(file.toLowerCase().indexOf('blank.png') >= 0)
+                texture.collision = false;
+
+            return texture;
+        });
 
         setTextures(textures);
         selectTexture(textures[0]);
