@@ -1,15 +1,16 @@
 import { ToolContext, ToolContextType } from "../../context/ToolContext";
 import { SelectionTool } from "../../tools/SelectionTool";
 import { SetCollisionTool } from "../../tools/SetCollisionTool";
+import { SetTextureTool } from "../../tools/SetTextureTool";
 import { Tool } from "../../tools/Tool";
 import "./ToolBoxComponent.css"
 import React, { useEffect } from "react";
 
 const tools: Array<Tool> = [
     new SelectionTool(),
+    new SetTextureTool(),
     new SetCollisionTool(),
-    //new SetTextureTool(),
-];
+]
 
 const ToolBoxComponent = () => {
 

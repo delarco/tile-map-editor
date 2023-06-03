@@ -1,63 +1,56 @@
 import { Layer } from "../components/Layers/LayersComponent";
-import { Tile } from "../models/Tile.model";
-import { Tool } from "./Tool";
+import { Texture } from "../models/Texture.model";
+import { Tile, TileFaceTexture } from "../models/Tile.model";
+import { Tool, ToolActionParams } from "./Tool";
 
 export class SetTextureTool implements Tool {
 
     public name = "SET TEXTURE";
 
+    public domElement = null;
+
     private lastTile: Tile;
-    private texture: string | null;
-    private layer: Layer;
 
     public onTileSelect: (tile: Tile) => void;
     public onTileUpdate: (tile: Tile) => void;
 
-    public setup(): void {
+    private setTileTexture(tile: Tile, layer: Layer, texture: Texture): void {
 
-    }
+        let layerProperty: TileFaceTexture | null = null;
 
-    public setTexture(texture: string | null): void {
+        switch (layer) {
 
-        if (texture && texture.toUpperCase().indexOf("BLANK.PNG") >= 0) {
-
-            texture = null;
-        }
-
-        this.texture = texture;
-    }
-
-    public setLayer(layer: Layer | null): void {
-
-        if (layer == null) return;
-        this.layer = layer;
-    }
-
-    private setTileTexture(tile: Tile): void {
-
-        switch (this.layer) {
-
-            case Layer.WALL:
-                tile.collision = this.texture != null;
-                tile.wall = this.texture;
+            case Layer.WALL:               
+                layerProperty = tile.wall;
                 break;
 
             case Layer.FLOOR:
-                tile.floor = this.texture;
+                layerProperty = tile.floor;
                 break;
 
             case Layer.CEILING:
-                tile.ceiling = this.texture;
+                layerProperty = tile.ceiling;
                 break;
         }
 
-        this.onTileUpdate(tile);
+        if (layerProperty) {
+
+            tile.collision = texture.collision;
+            layerProperty.north = texture;
+            layerProperty.south = texture;
+            layerProperty.east = texture;
+            layerProperty.west = texture;
+
+            this.onTileUpdate(tile);
+        }
     }
 
-    public tileMouseDown(tile: Tile): void {
+    public tileMouseDown({ tile, layer, texture }: ToolActionParams): void {
+
+        if (!tile || layer == null || !texture) return;
 
         this.lastTile = tile;
-        this.setTileTexture(tile);
+        this.setTileTexture(tile, layer, texture);
     }
 
     public tileMouseUp(): void {
@@ -68,12 +61,12 @@ export class SetTextureTool implements Tool {
 
     }
 
-    public tileMouseMove(tile: Tile, button: number): void {
+    public tileMouseMove({ tile, layer, texture, button }: ToolActionParams): void {
 
-        if (button != 1 || tile == this.lastTile) return;
+        if (!tile || layer == null || !texture || button != 1 || tile == this.lastTile) return;
 
         this.lastTile = tile;
-        this.setTileTexture(tile);
+        this.setTileTexture(tile, layer, texture);
     }
 
     public canvasMouseLeave(): void {
