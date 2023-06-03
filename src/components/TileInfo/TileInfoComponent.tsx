@@ -1,10 +1,17 @@
 import './TileInfoComponent.css';
 import { useContext } from "react";
 import { TileContext, TileContextType } from '../../context/TileContext';
+import { Tile } from '../../models/Tile.model';
 
 const TileInfoComponent = () => {
 
     const { tile } = useContext(TileContext) as TileContextType;
+
+    const toggleCollision = (tile: Tile) => {
+
+        // TODO: event
+        tile.collision = !tile.collision;
+    };
 
     return (
         <div className='tile-info-container'>
@@ -16,23 +23,72 @@ const TileInfoComponent = () => {
                         No tile selected
                     </span>
                     : <div>
-                        <ul className='tile-properties'>
-                            <li>
-                                x: {tile.x} &nbsp; y: {tile.y}
-                            </li>
-                            <li>
-                                <label htmlFor='collision'>Collision</label>
-                                <input type='checkbox'
-                                    id='collision'
-                                    readOnly={true}
-                                    checked={tile.collision}
-                                    // onChange={() => toggleCollision()}
-                                    />
-                            </li>
-                            <li>Wall: {tile.wall}</li>
-                            <li>Floor: {tile.floor}</li>
-                            <li>Ceiling: {tile.ceiling}</li>
-                        </ul>
+                        <table className='tile-properties'>
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>x</td>
+                                    <td>{tile.x}</td>
+                                </tr>
+                                <tr>
+                                    <td>y</td>
+                                    <td>{tile.y}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label htmlFor='collision'>Collision</label>
+                                    </td>
+                                    <td>
+                                        <input type='checkbox'
+                                            id='collision'
+                                            checked={tile.collision}
+                                            onChange={() => toggleCollision(tile)}
+                                            />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Wall - North</td>
+                                    <td>
+                                        <div className='texture-wrapper'>{tile.wall.north?.domElement}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Wall - South</td>
+                                    <td>
+                                        <div className='texture-wrapper'>{tile.wall.south?.domElement}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Wall - East</td>
+                                    <td>
+                                        <div className='texture-wrapper'>{tile.wall.east?.domElement}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Wall - West</td>
+                                    <td>
+                                        <div className='texture-wrapper'>{tile.wall.west?.domElement}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Floor</td>
+                                    <td>
+                                        <div className='texture-wrapper'>{tile.floor?.domElement}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Ceiling</td>
+                                    <td>
+                                        <div className='texture-wrapper'>{tile.ceiling?.domElement}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
             }
         </div>

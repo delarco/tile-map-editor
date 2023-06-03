@@ -13,3 +13,21 @@ span.no-selection {
 .tile-properties {
     font-size: .7rem;
 }
+
+.texture-wrapper {
+    width: 24px;
+    height: 24px;
+    border: 1px solid gray;
+    margin: 1px;
+}
+
+.wall-textures li {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.wall-textures span {
+    width: 80px;
+    align-self: center;
+}
