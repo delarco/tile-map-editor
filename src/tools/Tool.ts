@@ -1,6 +1,7 @@
 import React from "react";
 import { Layer } from "../components/Layers/LayersComponent";
 import { Tile } from "../models/Tile.model";
+import { Texture } from "../models/Texture.model";
 
 export interface ToolActionParams {
 
@@ -9,7 +10,7 @@ export interface ToolActionParams {
     tile: Tile | null;
     button: number | null;
     layer: Layer | null;
-    texture: string | null;
+    texture: Texture | null;
     tileSize: number | null;
 }
 
