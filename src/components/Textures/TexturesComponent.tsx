@@ -2,6 +2,8 @@ import "./TexturesComponent.css"
 import { TextureContext, TextureContextType } from "../../context/TextureContext";
 import { Texture } from "../../models/Texture.model";
 import { useContext, useEffect, useState } from "react";
+import { ToolContext, ToolContextType } from "../../context/ToolContext";
+import { SetTextureTool } from "../../tools/SetTextureTool";
 
 const textureFiles = [
     'blank.png',
@@ -19,6 +21,13 @@ const TexturesComponent = () => {
 
     const [textures, setTextures] = useState<Array<Texture>>([]);
     const { texture: selectedTexture, selectTexture } = useContext(TextureContext) as TextureContextType;
+    const { selectTool } = useContext(ToolContext) as ToolContextType;
+
+    const textureSelected = (texture: Texture) => {
+
+        selectTool(SetTextureTool.instance);
+        selectTexture(texture);
+    };
 
     useEffect(() => {
 
@@ -55,7 +64,7 @@ const TexturesComponent = () => {
                     textures.map((texture, index) => (
                         <li key={index}
                             className={texture == selectedTexture ? "texture selected" : "texture"}
-                            onClick={() => selectTexture(texture)}>
+                            onClick={() => textureSelected(texture)}>
                             {texture.domElement}
                         </li>
                     ))

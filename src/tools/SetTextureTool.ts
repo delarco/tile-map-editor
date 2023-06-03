@@ -1,6 +1,6 @@
 import { Layer } from "../components/Layers/LayersComponent";
 import { Texture } from "../models/Texture.model";
-import { Tile, TileFaceTexture } from "../models/Tile.model";
+import { Tile } from "../models/Tile.model";
 import { Tool, ToolActionParams } from "./Tool";
 
 export class SetTextureTool implements Tool {
@@ -13,6 +13,13 @@ export class SetTextureTool implements Tool {
 
     public onTileSelect: (tile: Tile) => void;
     public onTileUpdate: (tile: Tile) => void;
+
+    public static instance: SetTextureTool;
+
+    constructor() {
+
+        SetTextureTool.instance = this;
+    }
 
     private setTileTexture(tile: Tile, layer: Layer, texture: Texture): void {
 
