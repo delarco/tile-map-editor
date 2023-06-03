@@ -17,7 +17,7 @@ export class Tile {
         public minimapColor: Color = Color.WHITE,
         public collision: boolean = false,
         public wall: TileFaceTexture = { north: null, south: null, east: null, west: null },
-        public floor: TileFaceTexture = { north: null, south: null, east: null, west: null },
-        public ceiling: TileFaceTexture = { north: null, south: null, east: null, west: null },
+        public floor: Texture | null,
+        public ceiling: Texture | null,
     ) { }
 }
